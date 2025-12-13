@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description')->nullable();
+            $table->foreignId('creator_id')->constrained('users');
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
             $table->tinyInteger('status')->default(0);
-            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
             $table->softDeletes();
         });
