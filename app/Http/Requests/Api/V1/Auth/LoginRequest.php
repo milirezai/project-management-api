@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests\Api\V1\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ApiRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class ApiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'password' => 'required|unique:users|min:8|max:12',
+            'mobile' => 'required|min:11|max:11',
         ];
     }
 }

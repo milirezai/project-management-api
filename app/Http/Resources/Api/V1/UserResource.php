@@ -5,7 +5,7 @@ namespace App\Http\Resources\Api\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ApiResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,6 +14,11 @@ class ApiResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'first_name' =>  $this->first_name,
+            'last_name' =>  $this->last_name,
+            'mobile' =>  $this->mobile,
+            'profile_photo_path' =>  $this->profile_photo_path,
+        ];
     }
 }

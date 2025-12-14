@@ -18,7 +18,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
-    protected $fillable = ['first_name','last_name', 'email', 'mobile', 'status', 'activation', 'profile_photo_path', 'password', 'remember_token'];
+    protected $fillable = ['first_name','last_name', 'mobile', 'status', 'activation', 'profile_photo_path', 'password'];
 
     public function getFullNameAttribute()
     {
