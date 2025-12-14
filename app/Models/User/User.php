@@ -4,8 +4,11 @@ namespace App\Models\User;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Collaboration\Comment;
 use App\Models\Collaboration\Company;
+use App\Models\Collaboration\File;
 use App\Models\Project\Project;
+use App\Models\Project\Task;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -32,4 +35,18 @@ class User extends Authenticatable
         return $this->hasMany(Project::class,'creator_id');
     }
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class,'author_id');
+    }
 }

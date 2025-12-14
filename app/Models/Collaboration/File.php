@@ -2,6 +2,7 @@
 
 namespace App\Models\Collaboration;
 
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
@@ -11,5 +12,10 @@ class File extends Model
     public function fileable()
     {
         return $this->morphTo();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

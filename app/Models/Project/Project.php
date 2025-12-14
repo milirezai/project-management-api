@@ -3,6 +3,7 @@
 namespace App\Models\Project;
 
 use App\Models\Collaboration\Comment;
+use App\Models\Collaboration\File;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +24,11 @@ class Project extends Model
     public function creator()
     {
         return $this->belongsTo(User::class,'creator_id');
+    }
+
+    public function files()
+    {
+        return $this->morphMany(File::class,'fileable');
     }
 
 }
