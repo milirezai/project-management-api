@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Collaboration;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class TestApiController extends Controller
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        dd('hi');
+        //
     }
 
     /**

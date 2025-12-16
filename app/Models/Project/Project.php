@@ -5,12 +5,19 @@ namespace App\Models\Project;
 use App\Models\Collaboration\Comment;
 use App\Models\Collaboration\File;
 use App\Models\User\User;
+use Database\Factories\ProjectFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    use HasFactory;
     protected $fillable = ['name', 'description', 'start_date', 'end_date', 'status', 'creator_id'];
 
+    protected static function newFactory()
+    {
+        return ProjectFactory::new();
+    }
     public function comments()
     {
         return $this->morphMany(Comment::class,'commentable');
