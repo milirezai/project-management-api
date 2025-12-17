@@ -9,6 +9,7 @@ use App\Models\User\User;
 use Database\Factories\ProjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Project extends Model
 {
@@ -42,5 +43,9 @@ class Project extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+    public function scopeStatus (Builder $query, int $status): void
+    {
+        $query->where('status','=',$status);
     }
 }

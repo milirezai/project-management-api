@@ -24,9 +24,9 @@ class CompanyRequest extends FormRequest
     {
         if ($this->method() == 'PUT' || $this->method() == 'PATCH'){
             return [
-                'name' => ['required',Rule::unique('companies','name')->ignore($this->route('company')->id)],
+                'name' => ['nullable',Rule::unique('companies','name')->ignore($this->route('company')->id)],
                 'description' => 'nullable|max:400',
-                'address' => 'required|max:50|min:5',
+                'address' => 'nullable|max:50|min:5',
                 'phone_number' => ['required',Rule::unique('companies','phone_number')->ignore($this->route('company')->id)],
                 'email' => ['nullable','email',Rule::unique('companies','email')->ignore($this->route('company')->id)],
                 'website' => 'nullable|url',

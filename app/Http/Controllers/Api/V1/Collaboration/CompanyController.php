@@ -46,6 +46,7 @@ class CompanyController extends Controller
         $inputs['owner_id'] = $request->user()->id;
         $inputs['status'] = 1;
         $company = Company::create($inputs)->load('owner');
+
         return CompanyResource::make($company);
     }
 
@@ -70,6 +71,7 @@ class CompanyController extends Controller
     public function update(CompanyRequest $request, Company $company)
     {
         $company->update($request->all());
+
         return CompanyResource::make($company->load('owner'));
     }
 
@@ -79,6 +81,7 @@ class CompanyController extends Controller
     public function destroy(Company $company)
     {
         $company->delete();
+
         return response()->noContent();
     }
 
