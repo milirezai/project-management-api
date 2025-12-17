@@ -3,6 +3,7 @@
 namespace App\Models\Project;
 
 use App\Models\Collaboration\Comment;
+use App\Models\Collaboration\Company;
 use App\Models\Collaboration\File;
 use App\Models\User\User;
 use Database\Factories\ProjectFactory;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'description', 'start_date', 'end_date', 'status', 'creator_id'];
+    protected $fillable = ['name', 'description', 'start_date', 'end_date', 'status', 'creator_id','company_id'];
 
     protected static function newFactory()
     {
@@ -38,4 +39,8 @@ class Project extends Model
         return $this->morphMany(File::class,'fileable');
     }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

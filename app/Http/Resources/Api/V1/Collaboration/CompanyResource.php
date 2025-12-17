@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\V1\Collaboration;
 
+use App\Http\Resources\Api\V1\Project\ProjectResource;
 use App\Http\Resources\Api\V1\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -23,7 +24,9 @@ class CompanyResource extends JsonResource
             'email' => $this->email,
             'website' => $this->website,
             'type' => $this->type,
-            'owner' => UserResource::make($this->whenLoaded('owner'),)
+            'owner' => UserResource::make($this->whenLoaded('owner')),
+            'users' => UserResource::collection($this->whenLoaded('users')),
+            'projects' => ProjectResource::collection($this->whenLoaded('projects'))
         ];
     }
 }

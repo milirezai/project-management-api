@@ -2,6 +2,7 @@
 
 namespace App\Models\Collaboration;
 
+use App\Models\Project\Project;
 use App\Models\User\User;
 use Database\Factories\CompanyFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,6 +21,14 @@ class Company extends Model
     public function owner()
     {
         return $this->belongsTo (User::class,'owner_id');
+    }
+    public function users()
+    {
+        return $this->hasMany(User::class,'company_id');
+    }
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
     }
     public function scopeStatus (Builder $query, int $status): void
     {

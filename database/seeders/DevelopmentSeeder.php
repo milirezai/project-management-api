@@ -47,7 +47,8 @@ class DevelopmentSeeder extends Seeder
                 ->for($users->random())
             )
             ->create([
-                'creator_id' => fn() => $users->random()
+                'creator_id' => fn() => $users->random(),
+                'company_id' => fn() => $companies->random()
             ]);
 
         Task::factory()

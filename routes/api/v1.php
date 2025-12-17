@@ -14,4 +14,5 @@ Route::prefix('auth')->group(function (){
 });
 
 // company
-Route::apiResource('companies',CompanyController::class)->middleware('auth:sanctum');
+Route::apiResource('companies',CompanyController::class);//->middleware('auth:sanctum');
+

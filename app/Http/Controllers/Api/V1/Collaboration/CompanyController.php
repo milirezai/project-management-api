@@ -7,6 +7,7 @@ use App\Http\Requests\Api\V1\Collaboration\CompanyRequest;
 use App\Http\Resources\Api\V1\Collaboration\CompanyResource;
 use App\Models\Collaboration\Company;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast\Void_;
 
 class CompanyController extends Controller
 {
@@ -24,9 +25,7 @@ class CompanyController extends Controller
             $companies->type($type);
         });
 
-        if ($request->boolean('owner')){
-            $companies->with('owner');
-        }
+        $this->included($request,$companies,'with');
 
         return CompanyResource::collection($companies->get());
     }
@@ -46,9 +45,11 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Company $company)
+    public function show(Request $request,Company $company)
     {
-        return CompanyResource::make($company->load('owner'));
+        $this->included($request,$company);
+
+        return CompanyResource::make($company);
     }
 
     /**
@@ -67,5 +68,20 @@ class CompanyController extends Controller
     {
         $company->delete();
         return response()->noContent();
+    }
+    public function included(Request $request,$company,string $type = 'load'): void
+    {
+        $request->whenFilled('included',function ($included) use ($company,$type){
+            $includeds = explode(',',$included);
+            if (in_array('owner',$includeds)){
+                $company->$type('owner');
+            }
+            if (in_array('users',$includeds)){
+                $company->$type('users');
+            }
+            if (in_array('projects',$includeds)){
+                $company->$type('projects');
+            }
+        });
     }
 }

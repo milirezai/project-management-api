@@ -10,6 +10,7 @@ use App\Models\Collaboration\File;
 use App\Models\Project\Project;
 use App\Models\Project\Task;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -57,5 +58,9 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class,'author_id');
+    }
+    public function scopeCompanyy (Builder $builder,int $company): void
+    {
+        $builder->where('company_id','=',$company);
     }
 }
