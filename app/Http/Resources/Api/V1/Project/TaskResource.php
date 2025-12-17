@@ -7,7 +7,7 @@ use App\Http\Resources\Api\V1\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProjectResource extends JsonResource
+class TaskResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,13 +17,13 @@ class ProjectResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->name,
+            'title' => $this->title,
             'description' => $this->description,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'creator' => UserResource::make($this->whenLoaded('creator')),
-            'company' => CompanyResource::make($this->whenLoaded('company')),
-            'tasks' => TaskResource::collection($this->whenLoaded('tasks'))
+            'priority' => $this->priority,
+            'userAssign' => UserResource::make($this->whenLoaded('userAssign')),
+            'project' => CompanyResource::make($this->whenLoaded('project')),
         ];
     }
 }
