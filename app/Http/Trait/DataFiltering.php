@@ -6,61 +6,30 @@ use Illuminate\Http\Request;
 
 trait DataFiltering
 {
-    protected Request $request;
-    protected object $model;
-    protected mixed $relations;
-    protected string $typeLoading;
-    protected mixed $includes;
-    protected string $queryStringName = 'include';
-
-    public function queryStringName(string $queryStringName): self
+    public function loadingRelationFromRequest(
+        Request $request,
+        object $model,
+        mixed $includes,
+        mixed $relations,
+        string $queryName = 'include',
+        string $relationLoadingMode = 'with'
+    )
     {
-        $this->queryStringName = $queryStringName;
-        return $this;
-    }
-    public function request(mixed $request): self
-    {
-        $this->request = $request;
-        return $this;
-    }
-    public function include(mixed $includes): self
-    {
-        $this->includes = $includes;
-        return $this;
-    }
-
-    public function model(object $model): self
-    {
-        $this->model = $model;
-        return  $this;
-    }
-
-    public function relations(mixed $relations): self
-    {
-        $this->relations = $relations;
-        return $this;
-    }
-
-    public function typeLoading(string $typeLoading): self
-    {
-        $this->typeLoading = $typeLoading;
-        return $this;
-    }
-
-    public function relationLoad(): void
-    {
-        $this->request->whenFilled($this->queryStringName ,function ($queryStringName) {
-            $includes = explode(',',$queryStringName);
-            if (!is_array($this->relations) && !is_array($this->includes))
-                $relationIIncludeMatch = [$this->includes => $this->relations];
+        $request->whenFilled($queryName,function ($query) use (
+            $model, $includes, $relations, $relationLoadingMode
+        ) {
+            $convertQueryToArray = explode(',',$query);
+            if (!is_array($relations) && !is_array($includes))
+                $relationIIncludeMatch = [$includes => $relations];
             else
-                $relationIIncludeMatch = array_combine($this->includes,$this->relations);
+                $relationIIncludeMatch = array_combine($includes, $relations);
 
             foreach ($relationIIncludeMatch as $include => $relation){
-                if (in_array($include,$includes)){
-                    $this->model->{$this->typeLoading}($relation);
+                if (in_array($include,$convertQueryToArray)){
+                    $model->{$relationLoadingMode}($relation);
                 }
             }
         });
     }
+
 }

@@ -27,12 +27,10 @@ class CompanyController extends Controller
             $companies->type($type);
         });
 
-        $this->queryStringName('include')
-            ->request($request)
-            ->model($companies)
-            ->include(['owner','users','projects'])->relations(['owner','users','projects'])
-            ->typeLoading('with')
-            ->relationLoad();
+         $this->loadingRelationFromRequest(
+            model: $companies, request: $request,
+            includes: ['owner','users','projects'], relations: ['owner','users','projects']
+        );
 
         return CompanyResource::collection($companies->get());
     }
@@ -55,12 +53,10 @@ class CompanyController extends Controller
      */
     public function show(Request $request,Company $company)
     {
-        $this->queryStringName('include')
-            ->request($request)
-            ->model($company)
-            ->include(['owner','users','projects'])->relations(['owner','users','projects'])
-            ->typeLoading('load')
-            ->relationLoad();
+        $this->loadingRelationFromRequest(
+            model: $company, request: $request,
+            includes: ['owner','users','projects'], relations: ['owner','users','projects'], relationLoadingMode: 'load'
+        );
 
         return CompanyResource::make($company);
     }

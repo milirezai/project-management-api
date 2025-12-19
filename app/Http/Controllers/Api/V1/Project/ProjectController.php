@@ -24,12 +24,10 @@ class ProjectController extends Controller
             $projects->status($status);
         });
 
-        $this->queryStringName('include')
-            ->request($request)
-            ->model($projects)
-            ->include(['creator','company','tasks'])->relations(['creator','company','tasks'])
-            ->typeLoading('with')
-            ->relationLoad();
+        $this->loadingRelationFromRequest(
+            model: $projects, request: $request,
+            includes: ['creator','company','tasks'], relations: ['creator','company','tasks']
+        );
 
         return ProjectResource::collection($projects->get());
     }
@@ -52,12 +50,10 @@ class ProjectController extends Controller
      */
     public function show(Request $request, Project $project)
     {
-        $this->queryStringName('include')
-            ->request($request)
-            ->model($project)
-            ->include(['creator','company','tasks'])->relations(['creator','company','tasks'])
-            ->typeLoading('load')
-            ->relationLoad();
+           $this->loadingRelationFromRequest(
+            model: $project, request: $request,
+               includes: ['creator','company','tasks'], relations: ['creator','company','tasks'], relationLoadingMode: 'load'
+        );
 
         return ProjectResource::make($project);
     }
