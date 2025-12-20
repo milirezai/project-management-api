@@ -685,7 +685,7 @@
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "example": "creator,company,tasks"
+                            "example": "creator,company,tasks,files,comments"
                         }
                     }
                 ],
@@ -856,7 +856,7 @@
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "example": "creator,company,tasks"
+                            "example": "creator,company,tasks,files,comments"
                         }
                     }
                 ],
@@ -1033,6 +1033,459 @@
                     }
                 ]
             }
+        },
+        "/api/v1/tasks": {
+            "get": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "get tasks",
+                "operationId": "42b940fd3a795190cc1c117315c6a04c",
+                "parameters": [
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Load related resources (comma separated)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "project,assignee,creator,comments,files"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get tasks successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "register event "
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "fix bug in register event"
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "1998-07-28 00:56:01"
+                                                },
+                                                "end_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2009-08-26 23:51:20"
+                                                },
+                                                "priority": {
+                                                    "type": "string",
+                                                    "example": "important"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Task create",
+                "operationId": "42bb7db585b7d43eae5af918f310aff8",
+                "requestBody": {
+                    "description": "Task data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "start_date",
+                                    "end_date",
+                                    "project_id",
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "task title",
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "bog fix"
+                                    },
+                                    "description": {
+                                        "description": "description for task",
+                                        "type": "string",
+                                        "maxLength": 400,
+                                        "example": "this is a description for task",
+                                        "nullable": true
+                                    },
+                                    "start_date": {
+                                        "description": "project date start",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1998-07-28 00:56:01"
+                                    },
+                                    "end_date": {
+                                        "description": "project date start",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1998-09-28 00:56:01"
+                                    },
+                                    "status": {
+                                        "type": "boolean",
+                                        "example": "1",
+                                        "nullable": true
+                                    },
+                                    "project_id": {
+                                        "description": "project id ",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "user_id": {
+                                        "description": "The person who must perform the task.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "create task successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "register event "
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "fix bug in register event"
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "1998-07-28 00:56:01"
+                                                },
+                                                "end_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2009-08-26 23:51:20"
+                                                },
+                                                "priority": {
+                                                    "type": "string",
+                                                    "example": "important"
+                                                },
+                                                "creator": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string",
+                                                            "example": "milad"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string",
+                                                            "example": "rezai"
+                                                        },
+                                                        "mobile": {
+                                                            "type": "string",
+                                                            "example": "09167516826"
+                                                        },
+                                                        "profile_photo_path": {
+                                                            "type": "string",
+                                                            "example": "images/users/2025/12/01/1764590305.png"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/tasks/{task}": {
+            "get": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "get task",
+                "operationId": "a379fef7a3c50ac46f778326f7eb615e",
+                "parameters": [
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Load related resources (comma separated)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "project,assignee,creator,comments,files"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get task successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "register event "
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "fix bug in register event"
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "1998-07-28 00:56:01"
+                                                },
+                                                "end_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2009-08-26 23:51:20"
+                                                },
+                                                "priority": {
+                                                    "type": "string",
+                                                    "example": "important"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Task update",
+                "operationId": "e48b68f8eddccb76444b372fb2064c77",
+                "requestBody": {
+                    "description": "Task update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "task title",
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "bog fix",
+                                        "nullable": true
+                                    },
+                                    "description": {
+                                        "description": "description for task",
+                                        "type": "string",
+                                        "maxLength": 400,
+                                        "example": "this is a description for task",
+                                        "nullable": true
+                                    },
+                                    "start_date": {
+                                        "description": "project date start",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1998-07-28 00:56:01",
+                                        "nullable": true
+                                    },
+                                    "end_date": {
+                                        "description": "project date start",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1998-09-28 00:56:01",
+                                        "nullable": true
+                                    },
+                                    "status": {
+                                        "type": "boolean",
+                                        "example": "1",
+                                        "nullable": true
+                                    },
+                                    "project_id": {
+                                        "description": "project id ",
+                                        "type": "integer",
+                                        "example": "1",
+                                        "nullable": true
+                                    },
+                                    "user_id": {
+                                        "description": "The person who must perform the task.",
+                                        "type": "integer",
+                                        "example": "1",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "create task successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "register event "
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "fix bug in register event"
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "1998-07-28 00:56:01"
+                                                },
+                                                "end_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2009-08-26 23:51:20"
+                                                },
+                                                "priority": {
+                                                    "type": "string",
+                                                    "example": "important"
+                                                },
+                                                "creator": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string",
+                                                            "example": "milad"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string",
+                                                            "example": "rezai"
+                                                        },
+                                                        "mobile": {
+                                                            "type": "string",
+                                                            "example": "09167516826"
+                                                        },
+                                                        "profile_photo_path": {
+                                                            "type": "string",
+                                                            "example": "images/users/2025/12/01/1764590305.png"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "delete a task",
+                "operationId": "a943845930506ca130135908a25ef5dc",
+                "responses": {
+                    "204": {
+                        "description": "Task delete successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     },
     "tags": [
@@ -1047,6 +1500,10 @@
         {
             "name": "Project",
             "description": "Project"
+        },
+        {
+            "name": "Task",
+            "description": "Task"
         }
     ],
     "components": {

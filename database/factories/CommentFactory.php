@@ -21,7 +21,6 @@ class CommentFactory extends Factory
         return [
             'body' => fake()->text(300),
             'status' => 1,
-            'commentable_type' => 1
         ];
     }
 }

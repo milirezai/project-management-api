@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'user_id', 'start_data', 'end_date', 'status', 'project_id', 'priority'];
+    protected $fillable = ['title', 'description', 'user_id', 'project_id', 'creator_id', 'start_data', 'end_date', 'status', 'priority'];
 
     protected static function newFactory()
     {
@@ -28,13 +28,23 @@ class Task extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function userAssign()
+    public function assignee()
     {
         return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class,'creator_id');
     }
     public function files()
     {
         return $this->morphMany(File::class,'fileable');
+    }
+
+    public function scope()
+    {
+
     }
 
 }

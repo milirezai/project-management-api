@@ -28,7 +28,7 @@ class ProjectController extends Controller
      *          required=false,
      *              @OA\Schema(
      *              type="string",
-     *              example="creator,company,tasks"
+     *              example="creator,company,tasks,files,comments"
      *          )
      *     ),
      *     @OA\Response(
@@ -64,7 +64,7 @@ class ProjectController extends Controller
 
         $this->loadingRelationFromRequest(
             model: $projects, request: $request,
-            includes: ['creator','company','tasks'], relations: ['creator','company','tasks']
+            includes: ['creator','company','tasks','comments','files'], relations: ['creator','company','tasks','comments','files']
         );
 
         return ProjectResource::collection($projects->get());
@@ -166,7 +166,7 @@ class ProjectController extends Controller
      *          required=false,
      *              @OA\Schema(
      *              type="string",
-     *              example="creator,company,tasks"
+     *              example="creator,company,tasks,files,comments"
      *          )
      *     ),
      *     @OA\Response(
@@ -196,7 +196,7 @@ class ProjectController extends Controller
     {
            $this->loadingRelationFromRequest(
             model: $project, request: $request,
-               includes: ['creator','company','tasks'], relations: ['creator','company','tasks'], relationLoadingMode: 'load'
+               includes: ['creator','company','tasks','comments','files'], relations: ['creator','company','tasks','comments','files'], relationLoadingMode: 'load'
         );
 
         return ProjectResource::make($project);

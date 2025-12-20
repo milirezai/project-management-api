@@ -39,7 +39,7 @@ class DevelopmentSeeder extends Seeder
             ->has(
                 Comment::factory()
                 ->for($users->random(),'author')
-                ->count(4)
+                ->count(3)
             )
             ->has(
                 File::factory()
@@ -65,7 +65,8 @@ class DevelopmentSeeder extends Seeder
             )
             ->create([
                 'project_id' => fn() => $projects->random(),
-                'user_id' => fn() => $users->random()
+                'user_id' => fn() => $users->random(),
+                'creator_id' => fn() => $users->random()
             ]);
 
     }

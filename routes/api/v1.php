@@ -5,6 +5,9 @@ use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Collaboration\CompanyController;
 use App\Http\Controllers\Api\V1\Project\ProjectController;
 use App\Http\Controllers\Api\V1\V1Controller;
+use App\Http\Controllers\Api\V1\Project\TaskController;
+
+
 
 // for swagger
 Route::get('/',[V1Controller::class,'index']);
@@ -21,3 +24,7 @@ Route::apiResource('companies',CompanyController::class)->middleware('auth:sanct
 
 // project
 Route::apiResource('projects',ProjectController::class)->middleware('auth:sanctum');
+
+// task
+Route::apiResource('tasks',TaskController::class)->middleware('auth:sanctum');
+
