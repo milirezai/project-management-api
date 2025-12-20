@@ -13,8 +13,48 @@ use PhpParser\Node\Expr\Cast\Void_;
 class CompanyController extends Controller
 {
     use DataFiltering;
+
     /**
-     * Display a listing of the resource.
+     *
+     * @OA\Get (
+     *     path="/api/v1/companies",
+     *     summary="get companies",
+     *     tags={"Company"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter (
+     *         name="include",
+     *          in="query",
+     *          description="Load related resources (comma separated)",
+     *          required=false,
+     *              @OA\Schema(
+     *              type="string",
+     *              example="owner,users,projects"
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="get companies successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="data",
+     *                 @OA\Property(property="name", type="string", example="digikala"),
+     *                 @OA\Property(property="description", type="string", example="digikala is the largest online store in Iran."),
+     *                 @OA\Property(property="address", type="string", example="iran,thrane"),
+     *                 @OA\Property(property="phone_number", type="string", example="09167516826"),
+     *                 @OA\Property(property="email", type="string", example="store"),
+     *                 @OA\Property(property="website", type="string", example="digikala.com"),
+      *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error",
+     *     )
+     * )
      */
     public function index(Request $request)
     {
@@ -36,7 +76,96 @@ class CompanyController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     *
+     * @OA\Post  (
+     *     path="/api/v1/companies",
+     *     summary="Company create",
+     *     tags={"Company"},
+     *     security={{"sanctum":{}}},
+     *          @OA\RequestBody(
+     *          required=true,
+     *          description="Company data",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  required={"name", "address", "phone_number"},
+     *                  @OA\Property(
+     *                      property="name",
+     *                      type="string",
+     *                      description="company name",
+     *                      example="digikala",
+     *                      maxLength=40,
+     *                  ),
+     *                  @OA\Property(
+     *                      property="description",
+     *                      type="string",
+     *                      description="description for company",
+     *                      example="digikala is the largest online store in Iran.",
+     *                      maxLength=400,
+     *                      nullable=true
+     *                  ),
+     *                  @OA\Property(
+     *                      property="address",
+     *                      type="string",
+     *                      description="address company",
+     *                      example="iran,thrane",
+     *                      minLength=50,
+     *                      maxLength=5
+     *                  ),
+     *                       @OA\Property(
+     *                       property="phone_number",
+     *                       type="string",
+      *                       description="phone number for company",
+     *                       example="09167516826",
+      *                   ),
+     *                  @OA\Property(
+     *                      property="email",
+     *                      type="string",
+     *                      description="email for company",
+     *                      example="digikala@gmail.com",
+     *                     nullable=true,
+     *                  ),
+     *                  @OA\Property(
+     *                      property="website",
+     *                      type="url",
+     *                      description="url adders for company website",
+     *                       example="digikala.com",
+     *                      nullable=true
+     *                  ),
+     *                @OA\Property(
+     *                       property="type",
+     *                       type="string",
+     *                       description="type for company",
+     *                       example="store",
+     *                       nullable=true
+     *                   ),
+     *              )
+     *          )
+     *      ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="create company successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="data",
+     *                 @OA\Property(property="name", type="string", example="digikala"),
+     *                 @OA\Property(property="description", type="string", example="digikala is the largest online store in Iran."),
+     *                 @OA\Property(property="address", type="string", example="iran,thrane"),
+     *                 @OA\Property(property="phone_number", type="string", example="09167516826"),
+     *                 @OA\Property(property="email", type="string", example="store"),
+     *                 @OA\Property(property="website", type="string", example="digikala.com"),
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error",
+     *     )
+     * )
      */
     public function store(CompanyRequest $request)
     {
@@ -49,7 +178,46 @@ class CompanyController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     *
+     * @OA\Get (
+     *     path="/api/v1/companies/{company}",
+     *     summary="get company",
+     *     tags={"Company"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter (
+     *         name="include",
+     *          in="query",
+     *          description="Load related resources (comma separated)",
+     *          required=false,
+     *              @OA\Schema(
+     *              type="string",
+     *              example="owner,users,projects"
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="get company successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="data",
+     *                 @OA\Property(property="name", type="string", example="digikala"),
+     *                 @OA\Property(property="description", type="string", example="digikala is the largest online store in Iran."),
+     *                 @OA\Property(property="address", type="string", example="iran,thrane"),
+     *                 @OA\Property(property="phone_number", type="string", example="09167516826"),
+     *                 @OA\Property(property="email", type="string", example="store"),
+     *                 @OA\Property(property="website", type="string", example="digikala.com"),
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error",
+     *     )
+     * )
      */
     public function show(Request $request,Company $company)
     {
@@ -62,7 +230,97 @@ class CompanyController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     *
+     * @OA\Put  (
+     *     path="/api/v1/companies/",
+     *     summary="Company create",
+     *     tags={"Company"},
+     *     security={{"sanctum":{}}},
+     *          @OA\RequestBody(
+     *          required=true,
+     *          description="Company data",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(
+     *                      property="name",
+     *                      type="string",
+     *                      description="company name",
+     *                      example="digikala",
+     *                      maxLength=40,
+     *                      nullable=true
+     *                  ),
+     *                  @OA\Property(
+     *                      property="description",
+     *                      type="string",
+     *                      description="description for company",
+     *                      example="digikala is the largest online store in Iran.",
+     *                      maxLength=400,
+     *                      nullable=true
+     *                  ),
+     *                  @OA\Property(
+     *                      property="address",
+     *                      type="string",
+     *                      description="address company",
+     *                      example="iran,thrane",
+     *                      minLength=50,
+     *                      maxLength=5,
+     *                      nullable=true
+     *                  ),
+     *                       @OA\Property(
+     *                       property="phone_number",
+     *                       type="string",
+     *                       description="phone number for company",
+     *                       example="09167516826",
+     *                   ),
+     *                  @OA\Property(
+     *                      property="email",
+     *                      type="string",
+     *                      description="email for company",
+     *                      example="digikala@gmail.com",
+     *                     nullable=true,
+     *                  ),
+     *                  @OA\Property(
+     *                      property="website",
+     *                      type="url",
+     *                      description="url adders for company website",
+     *                       example="digikala.com",
+     *                      nullable=true
+     *                  ),
+     *                @OA\Property(
+     *                       property="type",
+     *                       type="string",
+     *                       description="type for company",
+     *                       example="store",
+     *                       nullable=true
+     *                   ),
+     *              )
+     *          )
+     *      ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="update company successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="data",
+     *                 @OA\Property(property="name", type="string", example="digikala"),
+     *                 @OA\Property(property="description", type="string", example="digikala is the largest online store in Iran."),
+     *                 @OA\Property(property="address", type="string", example="iran,thrane"),
+     *                 @OA\Property(property="phone_number", type="string", example="09167516826"),
+     *                 @OA\Property(property="email", type="string", example="store"),
+     *                 @OA\Property(property="website", type="string", example="digikala.com"),
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error",
+     *     )
+     * )
      */
     public function update(CompanyRequest $request, Company $company)
     {
@@ -72,7 +330,25 @@ class CompanyController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     *
+     * @OA\Delete (
+     *     path="/api/v1/companies/{company}",
+     *     summary="delete a company",
+     *     tags={"Company"},
+     *      security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=204,
+     *         description="Company delete successfully",
+     *     ),
+     *     @OA\Response(
+     *           response=401,
+     *           description="Unauthenticated",
+     *       ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error",
+     *     )
+     * )
      */
     public function destroy(Company $company)
     {

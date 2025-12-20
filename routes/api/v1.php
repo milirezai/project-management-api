@@ -4,7 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Collaboration\CompanyController;
 use App\Http\Controllers\Api\V1\Project\ProjectController;
+use App\Http\Controllers\Api\V1\V1Controller;
 
+// for swagger
+Route::get('/',[V1Controller::class,'index']);
 
 // auth
 Route::prefix('auth')->group(function (){

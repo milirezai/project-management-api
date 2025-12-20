@@ -1,0 +1,1062 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Management Api Documentation",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1": {},
+        "/api/v1/auth": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Create a new user",
+                "description": "Create a new user with the provided data",
+                "operationId": "8fdc39ba963c089d882406b6374fc7f7",
+                "requestBody": {
+                    "description": "User data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "password",
+                                    "mobile"
+                                ],
+                                "properties": {
+                                    "first_name": {
+                                        "description": "User's first name",
+                                        "type": "string",
+                                        "maxLength": 30,
+                                        "example": "milad",
+                                        "nullable": true
+                                    },
+                                    "last_name": {
+                                        "description": "User's last name",
+                                        "type": "string",
+                                        "maxLength": 30,
+                                        "example": "rezai",
+                                        "nullable": true
+                                    },
+                                    "password": {
+                                        "description": "User's password",
+                                        "type": "string",
+                                        "format": "password",
+                                        "maxLength": 12,
+                                        "minLength": 8,
+                                        "example": "secret123"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "User's password",
+                                        "type": "string",
+                                        "format": "password",
+                                        "maxLength": 12,
+                                        "minLength": 8,
+                                        "example": "secret123"
+                                    },
+                                    "mobile": {
+                                        "description": "User's mobile number",
+                                        "type": "string",
+                                        "example": "09167516826"
+                                    },
+                                    "profile_photo_path": {
+                                        "description": "User's frofile photo",
+                                        "type": "file:png,jpg,jpeg",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "milad"
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "rezai"
+                                                },
+                                                "mobile": {
+                                                    "type": "string",
+                                                    "example": "09167516826"
+                                                },
+                                                "profile_photo_path": {
+                                                    "type": "string",
+                                                    "example": "images/users/2025/12/01/1764590305.png"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "2|vlLCKWNJw1tDEsGYhUY6YqS3egSdfvfKr1EXG7NM0abe24e2"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "login a  user",
+                "description": "login a  user with the provided data",
+                "operationId": "3b03eb66e9fc14dbed91d82e3a240a06",
+                "requestBody": {
+                    "description": "User data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "password",
+                                    "mobile"
+                                ],
+                                "properties": {
+                                    "password": {
+                                        "description": "User's password",
+                                        "type": "string",
+                                        "format": "password",
+                                        "maxLength": 12,
+                                        "minLength": 8,
+                                        "example": "secret123"
+                                    },
+                                    "mobile": {
+                                        "description": "User's mobile number",
+                                        "type": "string",
+                                        "example": "09167516826"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "milad"
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "rezai"
+                                                },
+                                                "mobile": {
+                                                    "type": "string",
+                                                    "example": "09167516826"
+                                                },
+                                                "profile_photo_path": {
+                                                    "type": "string",
+                                                    "example": "images/users/2025/12/01/1764590305.png"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "2|vlLCKWNJw1tDEsGYhUY6YqS3egSdfvfKr1EXG7NM0abe24e2"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "": {
+                                                    "type": "",
+                                                    "example": ""
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "data invalid"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "logout a  user",
+                "description": "logout a  user with the token",
+                "operationId": "ee643cac55a982fc398983af84bf28aa",
+                "responses": {
+                    "204": {
+                        "description": "User logout successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/companies": {
+            "get": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "get companies",
+                "operationId": "22de33469ed1150a1e7e3cc0f7ed9bc4",
+                "parameters": [
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Load related resources (comma separated)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "owner,users,projects"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get companies successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "digikala"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "digikala is the largest online store in Iran."
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "iran,thrane"
+                                                },
+                                                "phone_number": {
+                                                    "type": "string",
+                                                    "example": "09167516826"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "store"
+                                                },
+                                                "website": {
+                                                    "type": "string",
+                                                    "example": "digikala.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "Company create",
+                "operationId": "6d4706a23af45e050654efcc13bacf33",
+                "requestBody": {
+                    "description": "Company data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "address",
+                                    "phone_number"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "company name",
+                                        "type": "string",
+                                        "maxLength": 40,
+                                        "example": "digikala"
+                                    },
+                                    "description": {
+                                        "description": "description for company",
+                                        "type": "string",
+                                        "maxLength": 400,
+                                        "example": "digikala is the largest online store in Iran.",
+                                        "nullable": true
+                                    },
+                                    "address": {
+                                        "description": "address company",
+                                        "type": "string",
+                                        "maxLength": 5,
+                                        "minLength": 50,
+                                        "example": "iran,thrane"
+                                    },
+                                    "phone_number": {
+                                        "description": "phone number for company",
+                                        "type": "string",
+                                        "example": "09167516826"
+                                    },
+                                    "email": {
+                                        "description": "email for company",
+                                        "type": "string",
+                                        "example": "digikala@gmail.com",
+                                        "nullable": true
+                                    },
+                                    "website": {
+                                        "description": "url adders for company website",
+                                        "type": "url",
+                                        "example": "digikala.com",
+                                        "nullable": true
+                                    },
+                                    "type": {
+                                        "description": "type for company",
+                                        "type": "string",
+                                        "example": "store",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "create company successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "digikala"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "digikala is the largest online store in Iran."
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "iran,thrane"
+                                                },
+                                                "phone_number": {
+                                                    "type": "string",
+                                                    "example": "09167516826"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "store"
+                                                },
+                                                "website": {
+                                                    "type": "string",
+                                                    "example": "digikala.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/companies/{company}": {
+            "get": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "get company",
+                "operationId": "f0177901a68b63d90c6f952cfedfdb24",
+                "parameters": [
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Load related resources (comma separated)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "owner,users,projects"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get company successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "digikala"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "digikala is the largest online store in Iran."
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "iran,thrane"
+                                                },
+                                                "phone_number": {
+                                                    "type": "string",
+                                                    "example": "09167516826"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "store"
+                                                },
+                                                "website": {
+                                                    "type": "string",
+                                                    "example": "digikala.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "delete a company",
+                "operationId": "09ee8344dc9e183224666183338c5355",
+                "responses": {
+                    "204": {
+                        "description": "Company delete successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/companies/": {
+            "put": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "Company create",
+                "operationId": "1e5555c718ccba76ac87983cc03ec34d",
+                "requestBody": {
+                    "description": "Company data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "company name",
+                                        "type": "string",
+                                        "maxLength": 40,
+                                        "example": "digikala",
+                                        "nullable": true
+                                    },
+                                    "description": {
+                                        "description": "description for company",
+                                        "type": "string",
+                                        "maxLength": 400,
+                                        "example": "digikala is the largest online store in Iran.",
+                                        "nullable": true
+                                    },
+                                    "address": {
+                                        "description": "address company",
+                                        "type": "string",
+                                        "maxLength": 5,
+                                        "minLength": 50,
+                                        "example": "iran,thrane",
+                                        "nullable": true
+                                    },
+                                    "phone_number": {
+                                        "description": "phone number for company",
+                                        "type": "string",
+                                        "example": "09167516826"
+                                    },
+                                    "email": {
+                                        "description": "email for company",
+                                        "type": "string",
+                                        "example": "digikala@gmail.com",
+                                        "nullable": true
+                                    },
+                                    "website": {
+                                        "description": "url adders for company website",
+                                        "type": "url",
+                                        "example": "digikala.com",
+                                        "nullable": true
+                                    },
+                                    "type": {
+                                        "description": "type for company",
+                                        "type": "string",
+                                        "example": "store",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "update company successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "digikala"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "digikala is the largest online store in Iran."
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "iran,thrane"
+                                                },
+                                                "phone_number": {
+                                                    "type": "string",
+                                                    "example": "09167516826"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "store"
+                                                },
+                                                "website": {
+                                                    "type": "string",
+                                                    "example": "digikala.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/projects": {
+            "get": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Get projects",
+                "operationId": "9590eef2a9081e6591e1ce49c8360ec1",
+                "parameters": [
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Load related resources (comma separated)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "creator,company,tasks"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get projects successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "digikala-api"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "digikala is the largest online store in Iran."
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "1998-07-28 00:56:01"
+                                                },
+                                                "end_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2009-08-26 23:51:20"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Project create",
+                "operationId": "98061d39b8df330fe77ccb0b1a20d708",
+                "requestBody": {
+                    "description": "Project data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "start_date",
+                                    "end_date"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "project name",
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "digikala-api"
+                                    },
+                                    "description": {
+                                        "description": "description for project",
+                                        "type": "string",
+                                        "maxLength": 400,
+                                        "example": "digikala is the largest online store in Iran.",
+                                        "nullable": true
+                                    },
+                                    "start_date": {
+                                        "description": "project date start",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1998-07-28 00:56:01"
+                                    },
+                                    "end_date": {
+                                        "description": "project date start",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1998-09-28 00:56:01"
+                                    },
+                                    "status": {
+                                        "type": "boolean",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "create project successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "digikala-api"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "digikala is the largest online store in Iran."
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "1998-07-28 00:56:01"
+                                                },
+                                                "end_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2009-08-26 23:51:20"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/projects/{project}": {
+            "get": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Get project",
+                "operationId": "06bd1e61a9a76aa02f4d7a06212e352b",
+                "parameters": [
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Load related resources (comma separated)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "creator,company,tasks"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get project successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "digikala-api"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "digikala is the largest online store in Iran."
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "1998-07-28 00:56:01"
+                                                },
+                                                "end_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2009-08-26 23:51:20"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Project update",
+                "operationId": "342c493b23cb55f7057cfe2210dc2d8f",
+                "requestBody": {
+                    "description": "Project update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "project name",
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "digikala-api",
+                                        "nullable": true
+                                    },
+                                    "description": {
+                                        "description": "description for project",
+                                        "type": "string",
+                                        "maxLength": 400,
+                                        "example": "digikala is the largest online store in Iran.",
+                                        "nullable": true
+                                    },
+                                    "start_date": {
+                                        "description": "project date start",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1998-07-28 00:56:01",
+                                        "nullable": true
+                                    },
+                                    "end_date": {
+                                        "description": "project date start",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1998-09-28 00:56:01",
+                                        "nullable": true
+                                    },
+                                    "status": {
+                                        "type": "boolean",
+                                        "example": "1",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "update project successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "digikala-api"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "digikala is the largest online store in Iran."
+                                                },
+                                                "start_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "1998-07-28 00:56:01"
+                                                },
+                                                "end_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2009-08-26 23:51:20"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "delete a project",
+                "operationId": "04cc8f2a338f8a37fc7bd5adf4f0508b",
+                "responses": {
+                    "204": {
+                        "description": "project delete successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Company",
+            "description": "Company"
+        },
+        {
+            "name": "Project",
+            "description": "Project"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
