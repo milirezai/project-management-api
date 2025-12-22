@@ -670,6 +670,377 @@
                 ]
             }
         },
+        "/api/v1/files": {
+            "get": {
+                "tags": [
+                    "File"
+                ],
+                "summary": "get files",
+                "operationId": "d23a934f1562f9d51d1f65a66fe927f6",
+                "parameters": [
+                    {
+                        "name": "creator",
+                        "in": "query",
+                        "description": "Filter by file creator",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "fileable_type",
+                        "in": "query",
+                        "description": "Filter by fileable_type ",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "task"
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Filter by file type ",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "png"
+                        }
+                    },
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "description": "Filter by file project ",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "task",
+                        "in": "query",
+                        "description": "Filter by file task ",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "10"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get files successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "file/1766405021.png"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "png"
+                                                },
+                                                "size": {
+                                                    "type": "integer",
+                                                    "example": "1234"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "creator": {
+                                                    "type": "string",
+                                                    "example": "info creator"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "File"
+                ],
+                "summary": "File create",
+                "operationId": "4dc8c5f741ba407f02f817f4254852b5",
+                "requestBody": {
+                    "description": "File data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "fileable_type",
+                                    "fileable_id",
+                                    "file"
+                                ],
+                                "properties": {
+                                    "fileable_type": {
+                                        "description": "Submit one of the entities: task and project.",
+                                        "type": "string",
+                                        "example": "task"
+                                    },
+                                    "fileable_id": {
+                                        "description": "1",
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "file": {
+                                        "description": "file",
+                                        "type": "string",
+                                        "example": "image.png"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "create file successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "file/1766405021.png"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "png"
+                                                },
+                                                "size": {
+                                                    "type": "integer",
+                                                    "example": "1234"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "creator": {
+                                                    "type": "string",
+                                                    "example": "info creator"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/files/{file}": {
+            "get": {
+                "tags": [
+                    "File"
+                ],
+                "summary": "get one file",
+                "operationId": "d91579cca90970f3e63d292151e0475d",
+                "responses": {
+                    "200": {
+                        "description": "get file successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "file/1766405021.png"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "png"
+                                                },
+                                                "size": {
+                                                    "type": "integer",
+                                                    "example": "1234"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "creator": {
+                                                    "type": "string",
+                                                    "example": "info creator"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "File"
+                ],
+                "summary": "File update",
+                "operationId": "c32eb567337e16a2482e029feeec3c91",
+                "requestBody": {
+                    "description": "File data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "type": {
+                                        "description": "update type file ",
+                                        "type": "string",
+                                        "example": "jpg",
+                                        "nullable": true
+                                    },
+                                    "status": {
+                                        "description": "status",
+                                        "type": "string",
+                                        "example": "1",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "update file successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "file/1766405021.png"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "png"
+                                                },
+                                                "size": {
+                                                    "type": "integer",
+                                                    "example": "1234"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "creator": {
+                                                    "type": "string",
+                                                    "example": "info creator"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "File"
+                ],
+                "summary": "delete a file",
+                "operationId": "6c0245cb70bf9572aa2af53805094df9",
+                "responses": {
+                    "204": {
+                        "description": "File delete successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/v1/projects": {
             "get": {
                 "tags": [
@@ -1496,6 +1867,10 @@
         {
             "name": "Company",
             "description": "Company"
+        },
+        {
+            "name": "File",
+            "description": "File"
         },
         {
             "name": "Project",

@@ -19,7 +19,8 @@ class FileResource extends JsonResource
             'path' => $this->path,
             'type' => $this->type,
             'size' => $this->size,
-            'author' => UserResource::make($this->user)
+            'status' => $this->status,
+            'creator' => UserResource::make($this->user)
         ];
     }
 }

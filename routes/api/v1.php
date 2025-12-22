@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\V1\Collaboration\CompanyController;
 use App\Http\Controllers\Api\V1\Project\ProjectController;
 use App\Http\Controllers\Api\V1\V1Controller;
 use App\Http\Controllers\Api\V1\Project\TaskController;
-
+use App\Http\Controllers\Api\V1\Collaboration\FileController;
 
 
 // for swagger
@@ -28,3 +28,5 @@ Route::apiResource('projects',ProjectController::class)->middleware('auth:sanctu
 // task
 Route::apiResource('tasks',TaskController::class)->middleware('auth:sanctum');
 
+// file
+Route::apiResource('files',FileController::class)->middleware('auth:sanctum');
