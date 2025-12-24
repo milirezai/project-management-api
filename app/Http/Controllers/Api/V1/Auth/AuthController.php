@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Auth\LoginRequest;
 use App\Http\Requests\Api\V1\Auth\RegisterRequest;
-use App\Http\Resources\Api\V1\UserResource;
+use App\Http\Resources\Api\V1\User\UserResource;
 use App\Models\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -102,7 +102,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $inputs = $request->all();
-        if ($request->has('profile_photo_path')){
+        if ($request->hasFile('profile_photo_path')){
             $file = $request->file('profile_photo_path');
             $fileName = time().'.'.$file->getClientOriginalExtension();
             $save = $file->move(public_path('image/profile'),$fileName);

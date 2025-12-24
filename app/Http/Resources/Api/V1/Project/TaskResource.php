@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api\V1\Project;
 
 use App\Http\Resources\Api\V1\Collaboration\CommentResource;
 use App\Http\Resources\Api\V1\Collaboration\FileResource;
-use App\Http\Resources\Api\V1\UserResource;
+use App\Http\Resources\Api\V1\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

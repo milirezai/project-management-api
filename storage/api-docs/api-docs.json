@@ -1385,7 +1385,7 @@
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "example": "creator,company,tasks,files,comments"
+                            "example": "creator,company,tasks,files,comments,members"
                         }
                     }
                 ],
@@ -1464,10 +1464,14 @@
                                     },
                                     "description": {
                                         "description": "description for project",
-                                        "type": "string",
                                         "maxLength": 400,
                                         "example": "digikala is the largest online store in Iran.",
                                         "nullable": true
+                                    },
+                                    "members": {
+                                        "description": "members id for project",
+                                        "type": "string",
+                                        "example": "[1,2,3,4,5]"
                                     },
                                     "start_date": {
                                         "description": "project date start",
@@ -1556,7 +1560,7 @@
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "example": "creator,company,tasks,files,comments"
+                            "example": "creator,company,tasks,files,comments,members"
                         }
                     }
                 ],
@@ -1648,6 +1652,11 @@
                                         "type": "string",
                                         "format": "date",
                                         "example": "1998-09-28 00:56:01",
+                                        "nullable": true
+                                    },
+                                    "members": {
+                                        "description": "update members id for project",
+                                        "example": "[1,2,3,4,5,6,7,8]",
                                         "nullable": true
                                     },
                                     "status": {
@@ -2186,6 +2195,253 @@
                     }
                 ]
             }
+        },
+        "/api/v1/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get users",
+                "operationId": "2935e090d80a55bdd629d8f62fc7c864",
+                "parameters": [
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Load related resources (comma separated)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "company,ownedCompany,projects,assignedProjects,tasks,assignedTasks"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get users successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "milad"
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "rezai"
+                                                },
+                                                "mobile": {
+                                                    "type": "string",
+                                                    "example": "09167516826"
+                                                },
+                                                "profile_photo_path": {
+                                                    "type": "string",
+                                                    "example": "image/image.png"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/users/{user}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user",
+                "operationId": "74f2f08e33fae533221a2db8a4eb5805",
+                "parameters": [
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Load related resources (comma separated)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "company,ownedCompany,projects,assignedProjects,tasks,assignedTasks"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get users successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "milad"
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "rezai"
+                                                },
+                                                "mobile": {
+                                                    "type": "string",
+                                                    "example": "09167516826"
+                                                },
+                                                "profile_photo_path": {
+                                                    "type": "string",
+                                                    "example": "image/image.png"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User update",
+                "operationId": "be257dbdfdf00f9d727844bd30629fe8",
+                "requestBody": {
+                    "description": "User update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "mobile": {
+                                        "description": "mobile number",
+                                        "type": "string",
+                                        "maxLength": 11,
+                                        "example": "09167516826",
+                                        "nullable": true
+                                    },
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "milad",
+                                        "nullable": true
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "rezai",
+                                        "nullable": true
+                                    },
+                                    "profile_photo_path": {
+                                        "type": "file",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "update project successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "milad"
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "rezai"
+                                                },
+                                                "mobile": {
+                                                    "type": "string",
+                                                    "example": "09167516826"
+                                                },
+                                                "profile_photo_path": {
+                                                    "type": "string",
+                                                    "example": "image/image.png"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "delete a user",
+                "operationId": "c1db2101db7a57c130432c374ee463a6",
+                "responses": {
+                    "204": {
+                        "description": "user delete successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     },
     "tags": [
@@ -2212,6 +2468,10 @@
         {
             "name": "Task",
             "description": "Task"
+        },
+        {
+            "name": "User",
+            "description": "User"
         }
     ],
     "components": {

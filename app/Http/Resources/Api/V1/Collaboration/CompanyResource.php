@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Api\V1\Collaboration;
 
 use App\Http\Resources\Api\V1\Project\ProjectResource;
-use App\Http\Resources\Api\V1\UserResource;
+use App\Http\Resources\Api\V1\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

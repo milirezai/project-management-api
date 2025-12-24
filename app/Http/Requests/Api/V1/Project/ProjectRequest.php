@@ -28,12 +28,16 @@ class ProjectRequest extends FormRequest
                 'description' => 'nullable|max:400',
                 'start_date' => 'nullable|date',
                 'end_date' =>   'nullable|date',
-                'status' => 'nullable|boolean'
+                'status' => 'nullable|boolean',
+                'members' => 'nullable|array',
+                'members.*' => 'nullable|exists:users,id'
             ];
         }
         else{
             return [
                 'name' => 'required|unique:projects,name|max:100',
+                'members' => 'required|array',
+                'members.*' => 'exists:users,id',
                 'description' => 'nullable|max:400',
                 'start_date' => 'required|date',
                 'end_date' =>   'required|date',

@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api\V1\Project;
 
 use App\Http\Resources\Api\V1\Collaboration\CompanyResource;
 use App\Http\Resources\Api\V1\Collaboration\FileResource;
-use App\Http\Resources\Api\V1\UserResource;
+use App\Http\Resources\Api\V1\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,6 +23,7 @@ class ProjectResource extends JsonResource
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'creator' => UserResource::make($this->whenLoaded('creator')),
+            'members' => UserResource::collection($this->whenLoaded('members')),
             'company' => CompanyResource::make($this->whenLoaded('company')),
             'tasks' => TaskResource::collection($this->whenLoaded('tasks')),
             'comments' => CompanyResource::collection($this->whenLoaded('comments')),

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\V1Controller;
 use App\Http\Controllers\Api\V1\Project\TaskController;
 use App\Http\Controllers\Api\V1\Collaboration\FileController;
 use App\Http\Controllers\Api\V1\Collaboration\CommentController;
+use App\Http\Controllers\Api\V1\User\UserController;
 
 // for swagger
 Route::get('/',[V1Controller::class,'index']);
@@ -18,6 +19,9 @@ Route::prefix('auth')->group(function (){
     Route::post('login',[AuthController::class,'login']);
     Route::post('logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
 });
+
+// user
+Route::apiResource('users',UserController::class)->middleware('auth:sanctum');
 
 // company
 Route::apiResource('companies',CompanyController::class)->middleware('auth:sanctum');

@@ -28,7 +28,7 @@ class ProjectController extends Controller
      *          required=false,
      *              @OA\Schema(
      *              type="string",
-     *              example="creator,company,tasks,files,comments"
+     *              example="creator,company,tasks,files,comments,members"
      *          )
      *     ),
      *     @OA\Response(
@@ -64,7 +64,8 @@ class ProjectController extends Controller
 
         $this->loadingRelationFromRequest(
             model: $projects, request: $request,
-            includes: ['creator','company','tasks','comments','files'], relations: ['creator','company','tasks','comments','files']
+            includes: ['creator','company','tasks','comments','files','members'],
+            relations: ['creator','company','tasks','comments','files','members']
         );
 
         return ProjectResource::collection($projects->get());
@@ -93,12 +94,17 @@ class ProjectController extends Controller
      *                  ),
      *                  @OA\Property(
      *                      property="description",
-     *                      type="string",
      *                      description="description for project",
      *                      example="digikala is the largest online store in Iran.",
      *                      maxLength=400,
      *                      nullable=true
      *                  ),
+     *                       @OA\Property(
+     *                       property="members",
+     *                       type="string",
+     *                       description="members id for project",
+     *                       example="[1,2,3,4,5]"
+     *                   ),
      *                  @OA\Property(
      *                      property="start_date",
      *                      type="date",
@@ -146,10 +152,13 @@ class ProjectController extends Controller
     {
         $inputs = $request->all();
         $inputs['creator_id'] = $request->user()->id;
-        $inputs['company_id'] = $request->user()->userCompany->id;
-        $project = Project::create($inputs)->load('creator');
+        $inputs['company_id'] = $request->user()->ownedCompany->id;
+        $project = Project::create($inputs);
 
-        return ProjectResource::make($project);
+        $project ->members()->sync($inputs['members']);
+
+
+        return ProjectResource::make($project->load('creator'));
     }
 
     /**
@@ -166,7 +175,7 @@ class ProjectController extends Controller
      *          required=false,
      *              @OA\Schema(
      *              type="string",
-     *              example="creator,company,tasks,files,comments"
+     *              example="creator,company,tasks,files,comments,members"
      *          )
      *     ),
      *     @OA\Response(
@@ -196,7 +205,8 @@ class ProjectController extends Controller
     {
            $this->loadingRelationFromRequest(
             model: $project, request: $request,
-               includes: ['creator','company','tasks','comments','files'], relations: ['creator','company','tasks','comments','files'], relationLoadingMode: 'load'
+               includes: ['creator','company','tasks','comments','files','members'],
+            relations: ['creator','company','tasks','comments','files','members'], relationLoadingMode: 'load'
         );
 
         return ProjectResource::make($project);
@@ -246,6 +256,12 @@ class ProjectController extends Controller
      *                       example="1998-09-28 00:56:01",
      *                        nullable=true
      *                   ),
+     *                     @OA\Property(
+     *                        property="members",
+     *                        description="update members id for project",
+     *                        example="[1,2,3,4,5,6,7,8]",
+     *                        nullable=true
+     *                    ),
      *                       @OA\Property(
      *                       property="status",
      *                       type="boolean",
@@ -281,6 +297,8 @@ class ProjectController extends Controller
     public function update(ProjectRequest $request, Project $project)
     {
         $project->update($request->all());
+
+        $project->members()->sync($request->members);
 
         return ProjectResource::make($project->load('creator'));
     }

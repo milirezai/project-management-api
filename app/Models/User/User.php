@@ -26,16 +26,12 @@ class User extends Authenticatable
     {
         return UserFactory::new();
     }
-    public function getFullNameAttribute()
-    {
-        return $this->first_name .' '. $this->last_name;
-    }
 
     public function company()
     {
         return $this->hasOne(Company::class,'owner_id');
     }
-    public function userCompany()
+    public function ownedCompany()
     {
         return $this->belongsTo(Company::class,'company_id');
     }
@@ -45,9 +41,18 @@ class User extends Authenticatable
         return $this->hasMany(Project::class,'creator_id');
     }
 
+    public function assignedProjects()
+    {
+        return $this->belongsToMany(Project::class);
+    }
+
     public function tasks()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class,'creator_id');
+    }
+    public function assignedTasks()
+    {
+        return $this->hasMany(Task::class,'user_id');
     }
 
     public function files()
@@ -59,8 +64,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class,'author_id');
     }
-    public function scopeCompanyy (Builder $builder,int $company): void
+
+    public function scopeCompanyUsers (Builder $builder, int $company_id)
     {
-        $builder->where('company_id','=',$company);
+        $builder->where('company_id','=',$company_id);
     }
 }

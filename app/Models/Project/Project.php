@@ -35,6 +35,11 @@ class Project extends Model
         return $this->belongsTo(User::class,'creator_id');
     }
 
+    public function members()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public function files()
     {
         return $this->morphMany(File::class,'fileable');
