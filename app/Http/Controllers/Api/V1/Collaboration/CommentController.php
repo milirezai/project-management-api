@@ -3,26 +3,25 @@
 namespace App\Http\Controllers\Api\V1\Collaboration;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\Collaboration\FileRequest;
-use App\Http\Resources\Api\V1\Collaboration\FileResource;
-use App\Models\Collaboration\File;
+use App\Http\Requests\Api\V1\Collaboration\CommentRequest;
+use App\Http\Resources\Api\V1\Collaboration\CommentResource;
+use App\Models\Collaboration\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-
-class FileController extends Controller
+class CommentController extends Controller
 {
     /**
      *
      * @OA\Get (
-     *     path="/api/v1/files",
-     *     summary="get files",
-     *     tags={"File"},
+     *     path="/api/v1/comments",
+     *     summary="get comments",
+     *     tags={"Comment"},
      *     security={{"sanctum":{}}},
      *     @OA\Parameter (
      *         name="creator",
      *          in="query",
-     *          description="Filter by file creator",
+     *          description="Filter by comment creator",
      *          required=false,
      *              @OA\Schema(
      *              type="string",
@@ -30,29 +29,19 @@ class FileController extends Controller
      *          )
      *     ),
      *     @OA\Parameter (
-     *          name="fileable_type",
+     *          name="commentable_type",
      *           in="query",
-     *           description="Filter by fileable_type ",
+     *           description="Filter by commentable_type ",
      *           required=false,
      *               @OA\Schema(
      *               type="string",
      *               example="task"
      *           )
      *      ),
-     *          @OA\Parameter (
-     *           name="type",
-     *            in="query",
-     *            description="Filter by file type ",
-     *            required=false,
-     *                @OA\Schema(
-     *                type="string",
-     *                example="png"
-     *            )
-     *       ),
      *               @OA\Parameter (
      *            name="project",
      *             in="query",
-     *             description="Filter by file project ",
+     *             description="Filter by comment project ",
      *             required=false,
      *                 @OA\Schema(
      *                 type="string",
@@ -62,7 +51,7 @@ class FileController extends Controller
      *                    @OA\Parameter (
      *             name="task",
      *              in="query",
-     *              description="Filter by file task ",
+     *              description="Filter by comment task ",
      *              required=false,
      *                  @OA\Schema(
      *                  type="string",
@@ -71,15 +60,13 @@ class FileController extends Controller
      *         ),
      *     @OA\Response(
      *         response=200,
-     *         description="get files successfully",
+     *         description="get comments successfully",
      *         @OA\JsonContent(
      *             @OA\Property(
      *                 property="data",
-     *                 @OA\Property(property="path", type="string", example="file/1766405021.png"),
-     *                 @OA\Property(property="type", type="string", example="png"),
-     *                 @OA\Property(property="size", type="int", example="1234"),
+     *                 @OA\Property(property="body", type="string", example="this is a body for comment"),
      *                 @OA\Property(property="status", type="int", example="1"),
-     *                  @OA\Property(property="creator", type="string", example="info creator"),
+     *                  @OA\Property(property="author", type="string", example="info author"),
      *             ),
      *         ),
      *     ),
@@ -95,77 +82,71 @@ class FileController extends Controller
      */
     public function index(Request $request)
     {
-        $files = File::query();
+        $comments = Comment::query();
 
-        $request->whenFilled('creator',function ($creator) use ($files){
-            $files->creator($creator);
+        $request->whenFilled('creator',function ($creator) use ($comments) {
+            $comments->creator($creator);
+        } );
+
+        $request->whenFilled('commentable_type',function ($commentableType) use ($comments){
+            $comments->commentableType($commentableType);
         });
 
-         $request->whenFilled('fileable_type',function ($fileableType) use ($files){
-             $files->FileableType($fileableType);
-         });
-
-        $request->whenFilled('type',function ($type) use ($files){
-            $files->type($type);
+        $request->whenFilled('project',function ($project) use ($comments){
+            $comments->project($project);
         });
 
-        $request->whenFilled('project',function ($project) use ($files){
-            $files->project($project);
+        $request->whenFilled('task',function ($task) use ($comments){
+            $comments->task($task);
         });
 
-        $request->whenFilled('task',function ($task) use ($files){
-            $files->task($task);
-        });
-
-        return FileResource::collection($files->get());
+        return CommentResource::collection($comments->get());
     }
 
     /**
      *
      * @OA\Post  (
-     *     path="/api/v1/files",
-     *     summary="File create",
-     *     tags={"File"},
+     *     path="/api/v1/comments",
+     *     summary="Comment create",
+     *     tags={"Comment"},
      *     security={{"sanctum":{}}},
      *          @OA\RequestBody(
      *          required=true,
-     *          description="File data",
+     *          description="Comment data",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
-     *                  required={"fileable_type", "fileable_id", "file"},
+     *                  required={"commentable_type", "commentable_id", "body"},
      *                  @OA\Property(
-     *                      property="fileable_type",
+     *                      property="commentable_type",
      *                      type="string",
      *                      description="Submit one of the entities: task and project.",
      *                      example="task",
      *                  ),
      *                  @OA\Property(
-     *                      property="fileable_id",
+     *                      property="commentable_id",
      *                      type="string",
      *                      description="1",
      *                      example="1",
-      *                  ),
+     *                  ),
      *                  @OA\Property(
-     *                      property="file",
-     *                      type="file",
-     *                      description="file",
-     *                      example="image.png",
-      *                  ),
+     *                      property="body",
+     *                      type="string",
+     *                      description="body",
+     *                      example="this is a body for commnet",
+     *                  ),
      *              )
      *          )
      *      ),
      *     @OA\Response(
      *         response=201,
-     *         description="create file successfully",
+     *         description="create comment successfully",
      *         @OA\JsonContent(
      *             @OA\Property(
      *                      property="data",
-     *                  @OA\Property(property="path", type="string", example="file/1766405021.png"),
-     *                  @OA\Property(property="type", type="string", example="png"),
-     *                  @OA\Property(property="size", type="int", example="1234"),
+     *                 @OA\Property(property="body", type="string", example="this is a body for comment"),
      *                  @OA\Property(property="status", type="int", example="1"),
-     *                   @OA\Property(property="creator", type="string", example="info creator"),
+     *                   @OA\Property(property="author", type="string", example="info author"),
      *             ),
      *         )
      *     ),
@@ -183,52 +164,42 @@ class FileController extends Controller
      *     )
      * )
      */
-    public function store(FileRequest $request)
+    public function store(CommentRequest $request)
     {
         $inputs = $request->all();
 
-        if (in_array($inputs['fileable_type'],['task','project'])){
-        $inputs['fileable_type'] = $inputs['fileable_type'] === 'project' ? 'App\Models\Project\Project' : 'App\Models\Project\Task';
-        $hasFileableId = $inputs['fileable_type']::find($inputs['fileable_id']);
-        if (!$hasFileableId){
-            throw ValidationException::withMessages(['fileable_id' => 'This identifier was not found in the fileable_type of the table.']);
-        }
+        if (in_array($inputs['commentable_type'],['task','project'])){
+            $inputs['commentable_type'] = $inputs['commentable_type'] === 'project' ? 'App\Models\Project\Project' : 'App\Models\Project\Task';
+            $hasCommentableId = $inputs['commentable_type']::find($inputs['commentable_id']);
+            if (!$hasCommentableId){
+                throw ValidationException::withMessages(['commentable_id' => 'This identifier was not found in the commentable_type of the table.']);
+            }
         }
 
-        $file = $request->file('file');
-        $fileName = time().'.'.$file->getClientOriginalExtension();
-        $save = $file->move(public_path('file'),$fileName);
-        $filePath = 'file/'.$fileName;
-        $inputs['path'] = $filePath;
-
-        $inputs['type'] = $file->getClientOriginalExtension();
-        $inputs['size'] = $file->getSize();
         $inputs['status'] = 1;
-        $inputs['user_id'] = $request->user()->id;
+        $inputs['author_id'] = $request->user()->id;
 
-        $file = File::create($inputs);
+        $comment = Comment::create($inputs);
 
-        return FileResource::make($file);
+        return CommentResource::make($comment);
     }
 
     /**
      *
      * @OA\Get (
-     *     path="/api/v1/files/{file}",
-     *     summary="get one file",
-     *     tags={"File"},
+     *     path="/api/v1/comments/{comment}",
+     *     summary="get comment",
+     *     tags={"Comment"},
      *     security={{"sanctum":{}}},
      *     @OA\Response(
      *         response=200,
-     *         description="get file successfully",
+     *         description="get comment successfully",
      *         @OA\JsonContent(
      *             @OA\Property(
      *                 property="data",
-     *                 @OA\Property(property="path", type="string", example="file/1766405021.png"),
-     *                 @OA\Property(property="type", type="string", example="png"),
-     *                 @OA\Property(property="size", type="int", example="1234"),
+     *                 @OA\Property(property="body", type="string", example="this is a body for comment"),
      *                 @OA\Property(property="status", type="int", example="1"),
-     *                  @OA\Property(property="creator", type="string", example="info creator"),
+     *                  @OA\Property(property="author", type="string", example="info author"),
      *             ),
      *         ),
      *     ),
@@ -242,29 +213,29 @@ class FileController extends Controller
      *     )
      * )
      */
-    public function show(File $file)
+    public function show(Comment $comment)
     {
-        return FileResource::make($file);
+        return CommentResource::make($comment);
     }
 
     /**
      *
      * @OA\Put   (
-     *     path="/api/v1/files/{file}",
-     *     summary="File update",
-     *     tags={"File"},
+     *     path="/api/v1/comments/{comment}",
+     *     summary="Comment update",
+     *     tags={"Comment"},
      *     security={{"sanctum":{}}},
      *          @OA\RequestBody(
      *          required=true,
-     *          description="File data",
+     *          description="Comment data",
      *          @OA\MediaType(
      *              mediaType="application/json",
      *              @OA\Schema(
      *                  @OA\Property(
-     *                      property="type",
+     *                      property="body",
      *                      type="string",
-     *                      description="update type file ",
-     *                      example="jpg",
+     *                      description="update body comment ",
+     *                      example="this is a new body for comment",
      *                      nullable=true
      *                  ),
      *                  @OA\Property(
@@ -279,15 +250,13 @@ class FileController extends Controller
      *      ),
      *     @OA\Response(
      *         response=201,
-     *         description="update file successfully",
+     *         description="update comment successfully",
      *         @OA\JsonContent(
      *             @OA\Property(
      *                      property="data",
-     *                  @OA\Property(property="path", type="string", example="file/1766405021.png"),
-     *                  @OA\Property(property="type", type="string", example="png"),
-     *                  @OA\Property(property="size", type="int", example="1234"),
-     *                  @OA\Property(property="status", type="int", example="1"),
-     *                   @OA\Property(property="creator", type="string", example="info creator"),
+     *                 @OA\Property(property="body", type="string", example="this is a body for comment"),
+     *                 @OA\Property(property="status", type="int", example="1"),
+     *                   @OA\Property(property="author", type="string", example="info author"),
      *             ),
      *         )
      *     ),
@@ -305,23 +274,23 @@ class FileController extends Controller
      *     )
      * )
      */
-    public function update(FileRequest $request, File $file)
+    public function update(CommentRequest $request, Comment $comment)
     {
-        $file->update($request->all());
+        $comment->update($request->all());
 
-        return FileResource::make($file);
+        return CommentResource::make($comment);
     }
 
     /**
      *
      * @OA\Delete (
-     *     path="/api/v1/files/{file}",
-     *     summary="delete a file",
-     *     tags={"File"},
+     *     path="/api/v1/comments/{comment}",
+     *     summary="delete a comment",
+     *     tags={"Comment"},
      *      security={{"sanctum":{}}},
      *     @OA\Response(
      *         response=204,
-     *         description="File delete successfully",
+     *         description="Comment delete successfully",
      *     ),
      *     @OA\Response(
      *           response=401,
@@ -333,9 +302,9 @@ class FileController extends Controller
      *     )
      * )
      */
-    public function destroy(File $file)
+    public function destroy(Comment $comment)
     {
-        $file->delete();
+        $comment->delete();
 
         return response()->noContent();
     }

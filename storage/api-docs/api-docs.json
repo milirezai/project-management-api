@@ -254,6 +254,335 @@
                 ]
             }
         },
+        "/api/v1/comments": {
+            "get": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "get comments",
+                "operationId": "ef361c3ca7c65cbcef9e75b3ea43eee4",
+                "parameters": [
+                    {
+                        "name": "creator",
+                        "in": "query",
+                        "description": "Filter by comment creator",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "commentable_type",
+                        "in": "query",
+                        "description": "Filter by commentable_type ",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "task"
+                        }
+                    },
+                    {
+                        "name": "project",
+                        "in": "query",
+                        "description": "Filter by comment project ",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "task",
+                        "in": "query",
+                        "description": "Filter by comment task ",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "10"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get comments successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "body": {
+                                                    "type": "string",
+                                                    "example": "this is a body for comment"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "author": {
+                                                    "type": "string",
+                                                    "example": "info author"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Comment create",
+                "operationId": "fee96bb2c7b7ae40d9a9103567e929d1",
+                "requestBody": {
+                    "description": "Comment data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "commentable_type",
+                                    "commentable_id",
+                                    "body"
+                                ],
+                                "properties": {
+                                    "commentable_type": {
+                                        "description": "Submit one of the entities: task and project.",
+                                        "type": "string",
+                                        "example": "task"
+                                    },
+                                    "commentable_id": {
+                                        "description": "1",
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "body": {
+                                        "description": "body",
+                                        "type": "string",
+                                        "example": "this is a body for commnet"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "create comment successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "body": {
+                                                    "type": "string",
+                                                    "example": "this is a body for comment"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "author": {
+                                                    "type": "string",
+                                                    "example": "info author"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/comments/{comment}": {
+            "get": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "get comment",
+                "operationId": "49b7db032f094eeaeb13311811776d7c",
+                "responses": {
+                    "200": {
+                        "description": "get comment successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "body": {
+                                                    "type": "string",
+                                                    "example": "this is a body for comment"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "author": {
+                                                    "type": "string",
+                                                    "example": "info author"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Comment update",
+                "operationId": "b5cf3a94c33df80b6be73f6d1ddf6ffb",
+                "requestBody": {
+                    "description": "Comment data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "body": {
+                                        "description": "update body comment ",
+                                        "type": "string",
+                                        "example": "this is a new body for comment",
+                                        "nullable": true
+                                    },
+                                    "status": {
+                                        "description": "status",
+                                        "type": "string",
+                                        "example": "1",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "update comment successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "body": {
+                                                    "type": "string",
+                                                    "example": "this is a body for comment"
+                                                },
+                                                "status": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "author": {
+                                                    "type": "string",
+                                                    "example": "info author"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "delete a comment",
+                "operationId": "0198b791596f1329dcd35cf502d4e59e",
+                "responses": {
+                    "204": {
+                        "description": "Comment delete successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/v1/companies": {
             "get": {
                 "tags": [
@@ -810,7 +1139,7 @@
                                     },
                                     "file": {
                                         "description": "file",
-                                        "type": "string",
+                                        "type": "file",
                                         "example": "image.png"
                                     }
                                 },
@@ -1863,6 +2192,10 @@
         {
             "name": "Auth",
             "description": "Auth"
+        },
+        {
+            "name": "Comment",
+            "description": "Comment"
         },
         {
             "name": "Company",

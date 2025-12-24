@@ -35,8 +35,10 @@ class File extends Model
 
     public function scopeFileableType (Builder $builder, string $type)
     {
-        $type = $type === 'task' ? 'App\Models\Project\Task' : 'App\Models\Project\Project';
+        if (in_array($type,['task','project'])) {
+            $type = $type === 'task' ? 'App\Models\Project\Task' : 'App\Models\Project\Project';
         $builder->where('fileable_type','=',$type);
+        }
     }
 
     public function scopeType (Builder $builder, string $type)

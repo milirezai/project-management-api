@@ -17,6 +17,7 @@ class CommentResource extends JsonResource
     {
         return [
             'body' => $this->body,
+            'status' => $this->status,
             'author' => UserResource::make($this->author)
         ];
     }

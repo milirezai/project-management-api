@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\V1\Project\ProjectController;
 use App\Http\Controllers\Api\V1\V1Controller;
 use App\Http\Controllers\Api\V1\Project\TaskController;
 use App\Http\Controllers\Api\V1\Collaboration\FileController;
-
+use App\Http\Controllers\Api\V1\Collaboration\CommentController;
 
 // for swagger
 Route::get('/',[V1Controller::class,'index']);
@@ -30,3 +30,6 @@ Route::apiResource('tasks',TaskController::class)->middleware('auth:sanctum');
 
 // file
 Route::apiResource('files',FileController::class)->middleware('auth:sanctum');
+
+// comment
+Route::apiResource('comments',CommentController::class)->middleware('auth:sanctum');
