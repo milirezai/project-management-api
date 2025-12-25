@@ -7,7 +7,7 @@ use App\Models\Collaboration\Company;
 use App\Models\Collaboration\File;
 use App\Models\Project\Project;
 use App\Models\Project\Task;
-use App\Models\User;
+use App\Models\User\User;
 use Illuminate\Database\Seeder;
 
 class DevelopmentSeeder extends Seeder

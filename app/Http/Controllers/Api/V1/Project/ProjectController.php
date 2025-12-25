@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers\Api\V1\Project;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Project\ProjectRequest;
 use App\Http\Resources\Api\V1\Project\ProjectResource;
 use App\Models\Project\Project;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Http\Trait\DataFiltering;
+use Illuminate\Routing\Controller;
 
-
-class ProjectController extends Controller
+class ProjectController extends  Controller
 {
-    use DataFiltering;
+    use DataFiltering, AuthorizesRequests;
+
+    public function __construct()
+    {
+        $this->authorizeResource(Project::class);
+    }
 
     /**
      *

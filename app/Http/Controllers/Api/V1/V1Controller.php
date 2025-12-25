@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use OpenApi\Annotations as OA;
+ use Illuminate\Http\Request;
+ use OpenApi\Annotations as OA;
 
 class V1Controller extends Controller
 {
@@ -18,9 +17,8 @@ class V1Controller extends Controller
      *      title="Management Api Documentation"
      * )
      */
-    public function index()
+    public function index(Company $company)
     {
-        $gate = Gate::inspect('lgo');
-        dd($gate->allowed());
+     //
     }
 }

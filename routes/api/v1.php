@@ -24,16 +24,16 @@ Route::prefix('auth')->group(function (){
 Route::apiResource('users',UserController::class)->middleware('auth:sanctum');
 
 // company
-Route::apiResource('companies',CompanyController::class)->middleware('auth:sanctum');
+Route::apiResource('companies',CompanyController::class);//->middleware('auth:sanctum');
 
 // project
-Route::apiResource('projects',ProjectController::class)->middleware('auth:sanctum');
+Route::apiResource('projects',ProjectController::class);//->middleware('auth:sanctum');
 
 // task
-Route::apiResource('tasks',TaskController::class)->middleware('auth:sanctum');
+Route::apiResource('tasks',TaskController::class);//->middleware('auth:sanctum');
 
 // file
 Route::apiResource('files',FileController::class)->middleware('auth:sanctum');
 
 // comment
-Route::apiResource('comments',CommentController::class)->middleware('auth:sanctum');
+Route::apiResource('comments',CommentController::class);//->middleware('auth:sanctum');

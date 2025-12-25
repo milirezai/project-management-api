@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers\Api\V1\Collaboration;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Collaboration\CompanyRequest;
 use App\Http\Resources\Api\V1\Collaboration\CompanyResource;
 use App\Http\Trait\DataFiltering;
 use App\Models\Collaboration\Company;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\Cast\Void_;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Routing\Controller;
 
 class CompanyController extends Controller
 {
-    use DataFiltering;
+    use DataFiltering,AuthorizesRequests;
+
+    public function __construct()
+    {
+        $this->authorizeResource(Company::class);
+    }
 
     /**
      *

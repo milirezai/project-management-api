@@ -2,11 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\User;
+use App\Models\User\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-use App\Models\User\Permission;
-
+use Illuminate\Http\Request;
 class AclServiceProvider extends ServiceProvider
 {
     /**
@@ -20,20 +19,18 @@ class AclServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      */
-    public function boot(): void
+    public function boot(Request $request): void
     {
-        auth()->loginUsingId(1);
 
         Gate::before(function (User $user){
             return $user->hasRole('admin');
         });
-
-        Permission::get()->map(function ($permission){
-            Gate::define($permission->name,function (User $user) use ($permission){
-                return $user->hasRoleOrPermission($permission->name);
-            });
-        });
-
+//
+//        Permission::get()->map(function ($permission){
+//            Gate::define($permission->name,function (User $user) use ($permission){
+//                return $user->hasRoleOrPermission($permission->name);
+//            });
+//        });
 
     }
 }

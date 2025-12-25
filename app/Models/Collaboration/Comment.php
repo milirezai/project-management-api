@@ -2,7 +2,7 @@
 
 namespace App\Models\Collaboration;
 
-use App\Models\User;
+use App\Models\User\User;
 use Database\Factories\CommentFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
