@@ -3,13 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Collaboration\Comment;
-use App\Models\Collaboration\File;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use App\Models\User\User;
 use App\Models\Collaboration\Company;
+use App\Models\Collaboration\File;
 use App\Models\Project\Project;
 use App\Models\Project\Task;
+use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class DevelopmentSeeder extends Seeder
 {

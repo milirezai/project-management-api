@@ -5,11 +5,11 @@ namespace App\Models\Project;
 use App\Models\Collaboration\Comment;
 use App\Models\Collaboration\Company;
 use App\Models\Collaboration\File;
-use App\Models\User\User;
+use App\Models\User;
 use Database\Factories\ProjectFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
 class Project extends Model
 {

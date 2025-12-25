@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\User\UserRequest;
 use App\Http\Resources\Api\V1\User\UserResource;
 use App\Http\Trait\DataFiltering;
-use App\Models\User\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller

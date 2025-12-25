@@ -3,7 +3,7 @@
 namespace App\Models\Collaboration;
 
 use App\Models\Project\Project;
-use App\Models\User\User;
+use App\Models\User;
 use Database\Factories\CompanyFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

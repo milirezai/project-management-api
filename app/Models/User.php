@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\User;
+namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
@@ -9,6 +9,7 @@ use App\Models\Collaboration\Company;
 use App\Models\Collaboration\File;
 use App\Models\Project\Project;
 use App\Models\Project\Task;
+use App\Trait\HasAcl;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +19,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens, HasAcl;
 
     protected $fillable = ['first_name','last_name', 'mobile', 'status', 'activation', 'profile_photo_path', 'password','company_id'];
 
