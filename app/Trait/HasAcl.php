@@ -17,11 +17,11 @@ trait HasAcl
         return $this->belongsToMany(Permission::class);
     }
 
-    protected function hasPermission(string $permission): bool
+    protected function checkPermission(string $permission): bool
     {
         return (bool) $this->permissions()->where('name',$permission)->count();
     }
-    protected function hasPermissionInRole(string $permission): bool
+    protected function checkPermissionInRole(string $permission): bool
     {
         foreach ($this->roles as  $role){
            $hasPermission = $role->permissions()->where('name',$permission)->count();
@@ -39,9 +39,9 @@ trait HasAcl
          }
          return false;
     }
-    public function hasRoleOrPermission (string $roleOrPermission): bool
+    public function hasPermission(string $permission): bool
     {
-        if ($this->hasPermissionInRole($roleOrPermission) || $this->hasPermission($roleOrPermission)){
+        if ($this->checkPermissionInRole($permission) || $this->checkPermission($permission)){
             return true;
         }
         return false;

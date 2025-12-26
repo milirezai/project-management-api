@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\Project\TaskController;
 use App\Http\Controllers\Api\V1\Collaboration\FileController;
 use App\Http\Controllers\Api\V1\Collaboration\CommentController;
 use App\Http\Controllers\Api\V1\User\UserController;
+use App\Http\Controllers\Api\V1\User\RoleController;
 
 // for swagger
 Route::get('/',[V1Controller::class,'index']);
@@ -23,17 +24,25 @@ Route::prefix('auth')->group(function (){
 // user
 Route::apiResource('users',UserController::class)->middleware('auth:sanctum');
 
+// role
+Route::middleware('auth:sanctum')->controller(RoleController::class)
+    ->prefix('roles')->group(function (){
+        Route::get('/','index');
+        Route::get('/{role}','show');
+    });
+
 // company
-Route::apiResource('companies',CompanyController::class);//->middleware('auth:sanctum');
+Route::apiResource('companies',CompanyController::class)->middleware('auth:sanctum');
 
 // project
-Route::apiResource('projects',ProjectController::class);//->middleware('auth:sanctum');
+Route::apiResource('projects',ProjectController::class)->middleware('auth:sanctum');
 
 // task
-Route::apiResource('tasks',TaskController::class);//->middleware('auth:sanctum');
+Route::apiResource('tasks',TaskController::class)->middleware('auth:sanctum');
 
 // file
 Route::apiResource('files',FileController::class)->middleware('auth:sanctum');
 
 // comment
-Route::apiResource('comments',CommentController::class);//->middleware('auth:sanctum');
+Route::apiResource('comments',CommentController::class)->middleware('auth:sanctum');
+
