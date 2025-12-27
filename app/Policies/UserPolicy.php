@@ -12,7 +12,10 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return Gate::allows('viewAny-users');
+        return Gate::allows('project-management') and
+            $user->hasPermissionInRole('project-management','viewAny-users')
+            ? true
+            : false;
     }
 
     /**
