@@ -16,7 +16,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(User::class);
+//        $this->authorizeResource(User::class);
     }
 
     /**
@@ -77,7 +77,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
@@ -240,5 +240,103 @@ class UserController extends Controller
         $user->delete();
 
         return response()->noContent();
+    }
+
+    /**
+     *
+     * @OA\Get (
+     *     path="/api/v1/users/{user}/roles",
+     *     summary="Get users with roles",
+     *     tags={"User"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="get users successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="data",
+     *                 @OA\Property(property="first_name", type="string", example="milad"),
+     *                  @OA\Property(property="last_name", type="string", example="rezai"),
+     *                  @OA\Property(property="mobile", type="string", example="09167516826"),
+     *                  @OA\Property(property="profile_photo_path", type="string", example="image/image.png"),
+     *                             @OA\Property(property="roles", type="string", example="['admin]"),
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *                   @OA\Response(
+     *            response=403,
+     *            description="Unauthorized",
+     *        ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error",
+     *     )
+     * )
+     */
+    public function roles(User $user)
+    {
+        return $user->load('roles')->toResource(UserResource::class);
+    }
+
+    /**
+     *
+     * @OA\Put  (
+     *     path="/api/v1/users/{user}/roles",
+     *     summary="User sync roles",
+     *     tags={"User"},
+     *     security={{"sanctum":{}}},
+     *          @OA\RequestBody(
+     *          required=true,
+     *          description="User sync roles",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(
+     *                      property="roles",
+     *                      type="string",
+     *                      description="roles id for sync",
+     *                      example="[1,2,3,4]",
+     *                  ),
+     *              )
+     *          )
+     *      ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="sync roles successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="data",
+     *                 @OA\Property(property="first_name", type="string", example="milad"),
+     *                   @OA\Property(property="last_name", type="string", example="rezai"),
+     *                   @OA\Property(property="mobile", type="string", example="09167516826"),
+     *                   @OA\Property(property="profile_photo_path", type="string", example="image/image.png"),
+     *                        @OA\Property(property="roles", type="string", example="['admin]"),
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *              @OA\Response(
+     *           response=403,
+     *           description="Unauthorized",
+     *       ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Server error",
+     *     )
+     * )
+     */
+    public function syncRoles(UserRequest $request,User $user)
+    {
+        $roles = array_values($request->roles);
+        $user->roles()->sync($roles);
+
+        return $user->load('roles')->toResource(UserResource::class);
     }
 }

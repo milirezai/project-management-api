@@ -2662,6 +2662,146 @@
                     }
                 ]
             }
+        },
+        "/api/v1/users/{user}/roles": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get users with roles",
+                "operationId": "b2d66433b1220a2e7fd2b2e324ce4e20",
+                "responses": {
+                    "200": {
+                        "description": "get users successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "milad"
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "rezai"
+                                                },
+                                                "mobile": {
+                                                    "type": "string",
+                                                    "example": "09167516826"
+                                                },
+                                                "profile_photo_path": {
+                                                    "type": "string",
+                                                    "example": "image/image.png"
+                                                },
+                                                "roles": {
+                                                    "type": "string",
+                                                    "example": "['admin]"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User sync roles",
+                "operationId": "c2aec55aa38ce904e70b8613f2a78e62",
+                "requestBody": {
+                    "description": "User sync roles",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "roles": {
+                                        "description": "roles id for sync",
+                                        "type": "string",
+                                        "example": "[1,2,3,4]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "sync roles successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "milad"
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "rezai"
+                                                },
+                                                "mobile": {
+                                                    "type": "string",
+                                                    "example": "09167516826"
+                                                },
+                                                "profile_photo_path": {
+                                                    "type": "string",
+                                                    "example": "image/image.png"
+                                                },
+                                                "roles": {
+                                                    "type": "string",
+                                                    "example": "['admin]"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     },
     "tags": [

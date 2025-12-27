@@ -22,11 +22,18 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'mobile' => ['nullable','min:11','max:11',Rule::unique('users','mobile')->ignore($this->route('user')->id)],
-            'first_name' => 'nullable|min:3|max:30',
-            'last_name' => 'nullable|min:3|max:30',
-            'profile_photo_path' => 'nullable|image|extensions:png,jpg,jpeg'
-        ];
+        if ($this->method() == 'PUT' || $this->method() == 'PATCH'){
+            return [
+                'roles' => 'required|array',
+                'roles.*' => 'exists:roles,id'
+            ];
+        }else{
+            return [
+                'mobile' => ['nullable','min:11','max:11',Rule::unique('users','mobile')->ignore($this->route('user')->id)],
+                'first_name' => 'nullable|min:3|max:30',
+                'last_name' => 'nullable|min:3|max:30',
+                'profile_photo_path' => 'nullable|image|extensions:png,jpg,jpeg'
+            ];
+        }
     }
 }

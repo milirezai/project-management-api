@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Collaboration\Comment;
 use App\Models\User\User;
+use Illuminate\Support\Facades\Gate;
 
 class CommentPolicy
 {
@@ -20,7 +21,7 @@ class CommentPolicy
      */
     public function view(User $user, Comment $comment): bool
     {
-        return false;
+        return true;
     }
 
     /**

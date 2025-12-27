@@ -22,6 +22,7 @@ class UserResource extends JsonResource
             'last_name' =>  $this->last_name,
             'mobile' =>  $this->mobile,
             'profile_photo_path' =>  $this->profile_photo_path,
+            'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'company' => CompanyResource::make($this->whenLoaded('company')),
             'ownedCompany' => CompanyResource::make($this->whenLoaded('ownedCompany')),
             'projects' => ProjectResource::collection($this->whenLoaded('projects')),
