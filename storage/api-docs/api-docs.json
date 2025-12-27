@@ -2296,6 +2296,126 @@
                 ]
             }
         },
+        "/api/v1/roles/{role}/permissions": {
+            "get": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Get permissions for role",
+                "operationId": "7150064ed9fcb88f29db5d1b68c3848d",
+                "responses": {
+                    "200": {
+                        "description": "get permission for role successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "admin"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "role admin"
+                                                },
+                                                "permissions": {
+                                                    "type": "string",
+                                                    "example": "role admin"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Roles sync permissions",
+                "operationId": "a982e07de26f341ab4af1e1ba0ce1cc6",
+                "requestBody": {
+                    "description": "Roles sync permissions",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "permissions": {
+                                        "description": "permissions id for sync",
+                                        "type": "string",
+                                        "example": "[1,2,3,4]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "sync permission successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "admin"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "role admin"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/v1/users": {
             "get": {
                 "tags": [

@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\V1\Collaboration\FileController;
 use App\Http\Controllers\Api\V1\Collaboration\CommentController;
 use App\Http\Controllers\Api\V1\User\UserController;
 use App\Http\Controllers\Api\V1\User\RoleController;
+use App\Http\Controllers\Api\V1\User\PermissionController;
 
 // for swagger
 Route::get('/',[V1Controller::class,'index']);
@@ -29,6 +30,14 @@ Route::middleware('auth:sanctum')->controller(RoleController::class)
     ->prefix('roles')->group(function (){
         Route::get('/','index');
         Route::get('/{role}','show');
+        Route::get('/{role}/permissions','getPermissions');
+        Route::put('/{role}/permissions','syncPermissions');
+    });
+
+// permissions
+Route::middleware('auth:sanctum')->controller(PermissionController::class)
+    ->prefix('permissions')->group(function (){
+        Route::get('/','index');
     });
 
 // company
