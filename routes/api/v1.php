@@ -35,8 +35,8 @@ Route::middleware('auth:sanctum')->controller(RoleController::class)
     ->prefix('roles')->group(function (){
         Route::get('/','index');
         Route::get('/{role}','show');
-        Route::get('/{role}/permissions','getPermissions');
-        Route::put('/{role}/permissions','syncPermissions');
+        Route::get('/{role}/permissions','getPermissions')->can('view','role');
+        Route::put('/{role}/permissions','syncPermissions')->can('update','role');
     });
 
 // permissions

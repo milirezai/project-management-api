@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Project\Project;
 use App\Models\User\User;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectPolicy
 {
@@ -12,7 +13,7 @@ class ProjectPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return Gate::allows('company-owner');
     }
 
     /**
@@ -20,7 +21,7 @@ class ProjectPolicy
      */
     public function view(User $user, Project $project): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -28,7 +29,9 @@ class ProjectPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return Gate::allows('company-owner')
+            or Gate::allows('project-management','create-project')
+            ? true : false;
     }
 
     /**
@@ -36,7 +39,10 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project): bool
     {
-        return false;
+        return Gate::allows('company-owner')
+            or Gate::allows('project-management','update-project')
+            and $project->creator->id === $user->id
+            ? true : false;
     }
 
     /**
@@ -44,7 +50,7 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project): bool
     {
-        return false;
+        return Gate::allows('company-owner');
     }
 
     /**

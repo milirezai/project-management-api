@@ -12,10 +12,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return Gate::allows('project-management') and
-            $user->hasPermissionInRole('project-management','viewAny-users')
-            ? true
-            : false;
+        return Gate::allows('company-owner') ;
     }
 
     /**
@@ -23,7 +20,9 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return Gate::allows('views-user');
+        return Gate::allows('company-owner')
+            or $model->id === $user->id
+            ? true : false;
     }
 
     /**
@@ -39,9 +38,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        if ($user->id === $model->id)
-            return true;
-        return false;
+        return $model->id === $user->id;
     }
 
     /**

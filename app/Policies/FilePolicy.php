@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Collaboration\File;
 use App\Models\User\User;
+use Illuminate\Support\Facades\Gate;
 
 class FilePolicy
 {
@@ -12,7 +13,7 @@ class FilePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return Gate::allows('company-owner');
     }
 
     /**
@@ -20,7 +21,9 @@ class FilePolicy
      */
     public function view(User $user, File $file): bool
     {
-        return false;
+        return Gate::any(['company-owner','project-management','developer'])
+            or $file->user->id === $user->id
+            ? true : false;
     }
 
     /**
@@ -28,7 +31,7 @@ class FilePolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return Gate::any(['company-owner','project-management','developer']);
     }
 
     /**
@@ -36,7 +39,9 @@ class FilePolicy
      */
     public function update(User $user, File $file): bool
     {
-        return false;
+        return Gate::any(['company-owner','project-management','developer'])
+            or $file->user->id === $user->id
+            ? true : false;
     }
 
     /**
@@ -44,7 +49,9 @@ class FilePolicy
      */
     public function delete(User $user, File $file): bool
     {
-        return false;
+        return Gate::any(['company-owner','project-management','developer'])
+            or $file->user->id === $user->id
+            ? true : false;
     }
 
     /**

@@ -4,6 +4,8 @@ namespace App\Policies;
 
 use App\Models\Project\Task;
 use App\Models\User\User;
+use Illuminate\Support\Facades\Gate;
+use function Laravel\Prompts\table;
 
 class TaskPolicy
 {
@@ -12,7 +14,7 @@ class TaskPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return Gate::any(['company-owner','project-management','developer']);
     }
 
     /**
@@ -20,7 +22,10 @@ class TaskPolicy
      */
     public function view(User $user, Task $task): bool
     {
-        return false;
+        return Gate::any(['company-owner','project-management','developer'])
+            or $user->id === $task->creator->id
+            or $user->id === $task->assignee->id
+            ? true : false;
     }
 
     /**
@@ -28,7 +33,7 @@ class TaskPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return Gate::any(['company-owner','project-management']);
     }
 
     /**
@@ -36,7 +41,9 @@ class TaskPolicy
      */
     public function update(User $user, Task $task): bool
     {
-        return false;
+        return Gate::any(['company-owner','project-management'])
+            or $user->id === $task->creator->id
+            ? true : false;
     }
 
     /**
@@ -44,7 +51,7 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task): bool
     {
-        return false;
+        eturn Gate::any(['company-owner','project-management']);
     }
 
     /**

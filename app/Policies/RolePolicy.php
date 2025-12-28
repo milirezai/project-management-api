@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\User\Role;
 use App\Models\User\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Gate;
 
 class RolePolicy
 {
@@ -13,7 +14,7 @@ class RolePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return Gate::allows('company-owner');
     }
 
     /**
@@ -21,7 +22,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role): bool
     {
-        return true;
+        return Gate::allows('company-owner');
     }
 
     /**
@@ -37,7 +38,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role): bool
     {
-        return false;
+        return Gate::allows('company-owner');
     }
 
     /**

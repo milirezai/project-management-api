@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Project\Project;
 use App\Models\User\User;
+use Illuminate\Support\Facades\Gate;
 
 class PermissionPolicy
 {
@@ -12,7 +13,7 @@ class PermissionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return Gate::allows('company-owner');
     }
 
     /**

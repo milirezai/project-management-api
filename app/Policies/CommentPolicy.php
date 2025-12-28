@@ -13,7 +13,7 @@ class CommentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return Gate::allows('company-owner');
     }
 
     /**
@@ -29,7 +29,7 @@ class CommentPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return Gate::any(['company-owner','project-management','developer']);
     }
 
     /**
@@ -37,7 +37,7 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment): bool
     {
-        return false;
+        return Gate::allows('company-owner');
     }
 
     /**
@@ -45,7 +45,7 @@ class CommentPolicy
      */
     public function delete(User $user, Comment $comment): bool
     {
-        return false;
+        return Gate::allows('company-owner');
     }
 
     /**

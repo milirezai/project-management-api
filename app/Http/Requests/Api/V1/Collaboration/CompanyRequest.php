@@ -27,7 +27,7 @@ class CompanyRequest extends FormRequest
                 'name' => ['nullable',Rule::unique('companies','name')->ignore($this->route('company')->id)],
                 'description' => 'nullable|max:400',
                 'address' => 'nullable|max:50|min:5',
-                'phone_number' => ['required',Rule::unique('companies','phone_number')->ignore($this->route('company')->id)],
+                'phone_number' => ['nullable',Rule::unique('companies','phone_number')->ignore($this->route('company')->id)],
                 'email' => ['nullable','email',Rule::unique('companies','email')->ignore($this->route('company')->id)],
                 'website' => 'nullable|url',
                 'type' => 'nullable|max:100'

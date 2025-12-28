@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Collaboration\Company;
 use App\Models\User\User;
+use Illuminate\Support\Facades\Gate;
 
 class CompanyPolicy
 {
@@ -12,7 +13,7 @@ class CompanyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -20,7 +21,10 @@ class CompanyPolicy
      */
     public function view(User $user, Company $company): bool
     {
-        return false;
+        // user -> create company -> set role -> company-woner -> for user
+        return Gate::allows('company-owner')
+            and $company->owner->id === $user->id
+            ? true : false;
     }
 
     /**
@@ -28,7 +32,8 @@ class CompanyPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->company()->count() > 1
+            ? false : true;
     }
 
     /**
@@ -36,7 +41,9 @@ class CompanyPolicy
      */
     public function update(User $user, Company $company): bool
     {
-        return true;
+        return Gate::allows('company-owner')
+            and $company->owner->id === $user->id
+                ? true : false;
     }
 
     /**
@@ -52,7 +59,9 @@ class CompanyPolicy
      */
     public function restore(User $user, Company $company): bool
     {
-        return true;
+        return Gate::allows('company-owner')
+            and $company->owner->id === $user->id
+                ? true : false;
     }
 
     /**
