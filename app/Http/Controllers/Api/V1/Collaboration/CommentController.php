@@ -179,7 +179,7 @@ class CommentController extends Controller
             $inputs['commentable_type'] = $inputs['commentable_type'] === 'project' ? 'App\Models\Project\Project' : 'App\Models\Project\Task';
             $hasCommentableId = $inputs['commentable_type']::find($inputs['commentable_id']);
             if (!$hasCommentableId){
-                throw ValidationException::withMessages(['commentable_id' => 'This identifier was not found in the commentable_type of the table.']);
+                throw  ValidationException::withMessages(['commentable_id' => 'This identifier was not found in the commentable_type of the table.']);
             }
         }
 

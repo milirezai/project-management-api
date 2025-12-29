@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Collaboration\Company;
 use App\Models\User\User;
 use Illuminate\Support\Facades\Gate;
+use App\Exceptions\CreateCompanyException;
 
 class CompanyPolicy
 {
@@ -31,7 +32,8 @@ class CompanyPolicy
     public function create(User $user): bool
     {
         return $user->company()->count() > 1
-            ? false : true;
+            ?  throw new CreateCompanyException()
+            : true;
     }
 
     /**

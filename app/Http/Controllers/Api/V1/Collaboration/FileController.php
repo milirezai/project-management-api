@@ -197,7 +197,7 @@ class FileController extends Controller
         $inputs['fileable_type'] = $inputs['fileable_type'] === 'project' ? 'App\Models\Project\Project' : 'App\Models\Project\Task';
         $hasFileableId = $inputs['fileable_type']::find($inputs['fileable_id']);
         if (!$hasFileableId){
-            throw ValidationException::withMessages(['fileable_id' => 'This identifier was not found in the fileable_type of the table.']);
+            throw  ValidationException::withMessages(['commentable_id' => 'This identifier was not found in the commentable_type of the table.']);
         }
         }
 
