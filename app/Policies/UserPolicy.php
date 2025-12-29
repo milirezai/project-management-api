@@ -12,7 +12,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return Gate::allows('company-owner') ;
+        return Gate::any(['company.owner','view.users']);
     }
 
     /**
@@ -20,9 +20,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return Gate::allows('company-owner')
-            or $model->id === $user->id
-            ? true : false;
+        return Gate::any(['company.owner','view.users']) or $model->id === $user->id;
     }
 
     /**
@@ -38,7 +36,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $model->id === $user->id;
+        return Gate::any(['company.owner','update.users']) or $model->id === $user->id;
     }
 
     /**

@@ -14,7 +14,7 @@ class RolePolicy
      */
     public function viewAny(User $user): bool
     {
-        return Gate::allows('company-owner');
+        return Gate::allows('company.owner');
     }
 
     /**
@@ -22,7 +22,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role): bool
     {
-        return Gate::allows('company-owner');
+        return Gate::allows('company.owner');
     }
 
     /**
@@ -38,7 +38,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role): bool
     {
-        return Gate::allows('company-owner');
+        return Gate::allows('company.owner');
     }
 
     /**

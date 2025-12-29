@@ -13,7 +13,7 @@ class ProjectPolicy
      */
     public function viewAny(User $user): bool
     {
-        return Gate::allows('company-owner');
+        return Gate::any(['company.owner','view.projecs']);
     }
 
     /**
@@ -29,9 +29,7 @@ class ProjectPolicy
      */
     public function create(User $user): bool
     {
-        return Gate::allows('company-owner')
-            or Gate::allows('project-management','create-project')
-            ? true : false;
+        return Gate::any(['company.owner','project.management','create.projecs']);
     }
 
     /**
@@ -39,10 +37,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project): bool
     {
-        return Gate::allows('company-owner')
-            or Gate::allows('project-management','update-project')
-            and $project->creator->id === $user->id
-            ? true : false;
+        return Gate::any(['company.owner','project.management','update.projecs']);
     }
 
     /**
@@ -50,7 +45,7 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project): bool
     {
-        return Gate::allows('company-owner');
+        return Gate::any(['company.owner','delete.projecs']);
     }
 
     /**

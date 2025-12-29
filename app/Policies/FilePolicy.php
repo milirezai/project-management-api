@@ -13,7 +13,7 @@ class FilePolicy
      */
     public function viewAny(User $user): bool
     {
-        return Gate::allows('company-owner');
+        return Gate::any(['company.owner','view.files']);
     }
 
     /**
@@ -21,9 +21,8 @@ class FilePolicy
      */
     public function view(User $user, File $file): bool
     {
-        return Gate::any(['company-owner','project-management','developer'])
-            or $file->user->id === $user->id
-            ? true : false;
+        return Gate::any(['company.owner','project.management','view.files'])
+            or $file->user->id === $user->id;
     }
 
     /**
@@ -31,7 +30,7 @@ class FilePolicy
      */
     public function create(User $user): bool
     {
-        return Gate::any(['company-owner','project-management','developer']);
+        return Gate::any(['company.owner','project.management','developer','create.files']);
     }
 
     /**
@@ -39,9 +38,8 @@ class FilePolicy
      */
     public function update(User $user, File $file): bool
     {
-        return Gate::any(['company-owner','project-management','developer'])
-            or $file->user->id === $user->id
-            ? true : false;
+        return Gate::any(['company.owner','project.management','developer','update.files'])
+            or $file->user->id === $user->id;
     }
 
     /**
@@ -49,9 +47,8 @@ class FilePolicy
      */
     public function delete(User $user, File $file): bool
     {
-        return Gate::any(['company-owner','project-management','developer'])
-            or $file->user->id === $user->id
-            ? true : false;
+        return Gate::any(['company.owner','project.management','developer','delete.files'])
+            or $file->user->id === $user->id;
     }
 
     /**

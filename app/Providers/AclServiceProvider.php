@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User\Permission;
 use App\Models\User\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -24,15 +25,18 @@ class AclServiceProvider extends ServiceProvider
     public function boot(Request $request): void
     {
         Gate::before(function (User $user){
-            return $user->hasRole('super-admin');
+            return $user->hasRole('super.admin');
         });
 
         Role::get()->map(function ($role){
-            Gate::define($role->name, function (User $user, ?string $permission = null) use ($role){
-                if (!empty($permission))
-                    return (bool) $user->hasPermissionInRole($role->name,$permission);
-                else
-                    return $user->hasRole($role->name);
+            Gate::define($role->name, function (User $user) use ($role){
+               return$user->hasRole($role->name);
+            });
+        });
+
+        Permission::get()->map(function ($permission){
+            Gate::define($permission->name, function (User $user) use ($permission){
+             return $user->hasPermission($permission->name);
             });
         });
     }

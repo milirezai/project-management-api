@@ -70,12 +70,12 @@ class DevelopmentSeeder extends Seeder
                 'creator_id' => fn() => $users->random()
             ]);
 
-        $entities = collect( ['company','project','task','user','file','permission','role','comment']);
+        $entities = collect( ['companies','projecs','tasks','users','files','permissions','roles','comments']);
         $operations = collect(['create','view','update','delete']);
         $entities->map(function ($entity) use ($operations){
             $operations->map(function ($operation)  use ($entity){
                 Permission::factory()->create([
-                    'name' => $entity.'.'.$operation,
+                    'name' => $operation.'.'.$entity,
                     'description' => $operation.' in '.$entity,
                     'status' => 1
                 ]);
@@ -84,9 +84,9 @@ class DevelopmentSeeder extends Seeder
 
         $roles = collect(
             [
-                ['name' => 'super-admin', 'description' => 'A Super Administrator is a user who has complete access to all objects, folders, role templates, and groups in the system. A deployment can have one or more Super Administrators. A Super Administrator can create users, groups, and other super administrators.'],
-                ['name' => 'company-owner', 'description' => 'The primary owner of the system or company with full access to all resources and overall control over system configuration and management.'],
-                ['name' => 'project-management', 'description' => 'A user responsible for creating and managing projects,tasks,and project members,with addminstraative access limited to their assigned projects'],
+                ['name' => 'super.admin', 'description' => 'A Super Administrator is a user who has complete access to all objects, folders, role templates, and groups in the system. A deployment can have one or more Super Administrators. A Super Administrator can create users, groups, and other super administrators.'],
+                ['name' => 'company.owner', 'description' => 'The primary owner of the system or company with full access to all resources and overall control over system configuration and management.'],
+                ['name' => 'project.management', 'description' => 'A user responsible for creating and managing projects,tasks,and project members,with addminstraative access limited to their assigned projects'],
                 ['name' => 'developer', 'description' => 'An operational user who has access to assigned projects and tasks and is responsible for executing assigned work and contributing to project activities.']
             ]
         );

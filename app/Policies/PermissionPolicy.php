@@ -13,7 +13,7 @@ class PermissionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return Gate::allows('company-owner');
+        return Gate::allows('company.owner');
     }
 
     /**

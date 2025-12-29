@@ -21,10 +21,8 @@ class CompanyPolicy
      */
     public function view(User $user, Company $company): bool
     {
-        // user -> create company -> set role -> company-woner -> for user
-        return Gate::allows('company-owner')
-            and $company->owner->id === $user->id
-            ? true : false;
+        return Gate::any(['company.owner','view.companies'])
+            or $company->owner->id === $user->id;
     }
 
     /**
@@ -41,9 +39,8 @@ class CompanyPolicy
      */
     public function update(User $user, Company $company): bool
     {
-        return Gate::allows('company-owner')
-            and $company->owner->id === $user->id
-                ? true : false;
+        return Gate::any(['company.owner','update.companies'])
+            or $company->owner->id === $user->id;
     }
 
     /**
@@ -51,7 +48,8 @@ class CompanyPolicy
      */
     public function delete(User $user, Company $company): bool
     {
-        return true;
+        return Gate::any(['company.owner','delete.companies'])
+            or $company->owner->id === $user->id;
     }
 
     /**
@@ -59,9 +57,7 @@ class CompanyPolicy
      */
     public function restore(User $user, Company $company): bool
     {
-        return Gate::allows('company-owner')
-            and $company->owner->id === $user->id
-                ? true : false;
+        return false;
     }
 
     /**

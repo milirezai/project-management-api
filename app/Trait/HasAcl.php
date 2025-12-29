@@ -19,10 +19,9 @@ trait HasAcl
 
     public function hasRole(string $role)
     {
-        return
-            (bool) $this->roles()->where('name','=',$role)->count()
-            ? true : false;
+        return  (bool) $this->roles()->where('name','=',$role)->count();
     }
+
     public function hasRoleWithPermission(string $roleName, ?string $permission = null): bool
     {
         return $this->hasRole($roleName)
@@ -42,5 +41,14 @@ trait HasAcl
         }
             return false;
     }
-}
 
+    public function hasPermission(string $permission)
+    {
+       foreach ($this->roles as $role){
+           $hasPermission = (bool) $role->permissions()->where('name','=',$permission)->count();
+           if ($hasPermission)
+               return $hasPermission;
+       }
+       return false;
+    }
+}

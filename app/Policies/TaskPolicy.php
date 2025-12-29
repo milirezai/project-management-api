@@ -14,7 +14,7 @@ class TaskPolicy
      */
     public function viewAny(User $user): bool
     {
-        return Gate::any(['company-owner','project-management','developer']);
+        return Gate::any(['company.owner','project.management','developer','view.tasks']);
     }
 
     /**
@@ -22,10 +22,9 @@ class TaskPolicy
      */
     public function view(User $user, Task $task): bool
     {
-        return Gate::any(['company-owner','project-management','developer'])
+        return Gate::any(['company.owner','project.management','developer','view.tasks'])
             or $user->id === $task->creator->id
-            or $user->id === $task->assignee->id
-            ? true : false;
+            or $user->id === $task->assignee->id;
     }
 
     /**
@@ -33,7 +32,7 @@ class TaskPolicy
      */
     public function create(User $user): bool
     {
-        return Gate::any(['company-owner','project-management']);
+        return Gate::any(['company.owner','project.management','create.tasks']);
     }
 
     /**
@@ -41,9 +40,8 @@ class TaskPolicy
      */
     public function update(User $user, Task $task): bool
     {
-        return Gate::any(['company-owner','project-management'])
-            or $user->id === $task->creator->id
-            ? true : false;
+        return Gate::any(['company.owner','project.management','create.tasks'])
+            or $user->id === $task->creator->id;
     }
 
     /**
@@ -51,7 +49,7 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task): bool
     {
-        eturn Gate::any(['company-owner','project-management']);
+        return Gate::any(['company.owner','project.management','delete.tasks']);
     }
 
     /**
