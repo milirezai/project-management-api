@@ -27,7 +27,7 @@ Route::apiResource('users',UserController::class)->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->controller(UserController::class)
     ->prefix('users')->group(function (){
         Route::get('/{user}/roles','roles');
-        Route::put('/{user}/roles','syncRoles');
+        Route::post('/{user}/roles','syncRoles');
     });
 
 // role

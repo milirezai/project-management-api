@@ -21,7 +21,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens, HasAcl;
 
-    protected $fillable = ['first_name','last_name', 'mobile', 'status', 'activation', 'profile_photo_path', 'password','company_id'];
+    protected $fillable = ['first_name','last_name', 'mobile','email', 'status', 'activation', 'profile_photo_path', 'password','company_id'];
 
     protected static function newFactory()
     {

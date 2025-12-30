@@ -6,6 +6,8 @@ use App\Http\Requests\Api\V1\User\UserRequest;
 use App\Http\Resources\Api\V1\User\UserResource;
 use App\Http\Trait\DataFiltering;
 use App\Models\User\User;
+use App\Notifications\User\UserSyncRoleNotification;
+use App\Notifications\User\UserUpdateNotification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -210,7 +212,7 @@ class UserController extends Controller
             $request['profile_photo_path'] = $filePath;
         }
         $user->update($request->all());
-
+        $user->notify(new UserUpdateNotification());
         return UserResource::make($user);
     }
 
@@ -284,7 +286,7 @@ class UserController extends Controller
 
     /**
      *
-     * @OA\Put  (
+     * @OA\Post   (
      *     path="/api/v1/users/{user}/roles",
      *     summary="User sync roles",
      *     tags={"User"},
@@ -336,6 +338,7 @@ class UserController extends Controller
     {
         $roles = array_values($request->roles);
         $user->roles()->sync($roles);
+        $user->notify(new UserSyncRoleNotification());
 
         return $user->load('roles')->toResource(UserResource::class);
     }

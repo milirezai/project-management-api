@@ -42,9 +42,9 @@ class Task extends Model
         return $this->morphMany(File::class,'fileable');
     }
 
-    public function scope()
+    public function company()
     {
-
+        return $this->project->company();
     }
 
 }

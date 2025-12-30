@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Api\V1\Auth;
 
+use App\Events\User\UserRegistered;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Auth\LoginRequest;
 use App\Http\Requests\Api\V1\Auth\RegisterRequest;
 use App\Http\Resources\Api\V1\User\UserResource;
 use App\Models\User\User;
+use App\Notifications\User\LoginNotification;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\AuthenticationException;
 
 class AuthController extends Controller
 {
@@ -115,6 +117,7 @@ class AuthController extends Controller
         $inputs['status'] = 1;
         $user = User::create($inputs);
         $token = $user->createToken('api-token');
+        event(new UserRegistered($user));
         return $user->toResource(UserResource::class)->additional(['token' => $token->plainTextToken]);
     }
 
@@ -195,6 +198,7 @@ class AuthController extends Controller
 
         $user->tokens()->delete();
         $token = $user->createToken('api-token');
+        $user->notify(new LoginNotification());
         return $user->toResource(UserResource::class)->additional(['token' => $token->plainTextToken]);
     }
 

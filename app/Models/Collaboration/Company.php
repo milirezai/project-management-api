@@ -8,10 +8,11 @@ use Database\Factories\CompanyFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Company extends Model
 {
-    use HasFactory;
+    use HasFactory,Notifiable;
     protected $fillable = ['name', 'description', 'status', 'address', 'phone_number', 'email', 'website', 'type', 'owner_id'];
 
     protected static function newFactory()

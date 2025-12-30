@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V1\Collaboration;
 use App\Http\Requests\Api\V1\Collaboration\CommentRequest;
 use App\Http\Resources\Api\V1\Collaboration\CommentResource;
 use App\Models\Collaboration\Comment;
+use App\Notifications\Collaboration\CommentCreateNotification;
+use App\Notifications\Collaboration\CommentUpdateNotification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -188,6 +190,9 @@ class CommentController extends Controller
 
         $comment = Comment::create($inputs);
 
+        $comment->commentable->company->owner->notify(new CommentCreateNotification());
+        $comment->author->notify(new CommentCreateNotification());
+
         return CommentResource::make($comment);
     }
 
@@ -284,6 +289,9 @@ class CommentController extends Controller
     public function update(CommentRequest $request, Comment $comment)
     {
         $comment->update($request->all());
+
+        $comment->commentable->company->owner->notify(new CommentUpdateNotification());
+        $comment->author->notify(new CommentUpdateNotification());
 
         return CommentResource::make($comment);
     }

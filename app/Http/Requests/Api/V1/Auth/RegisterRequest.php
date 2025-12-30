@@ -23,6 +23,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'first_name' => 'nullable|min:3|max:30',
+            'email' => 'required|email',
             'last_name' => 'nullable|min:5|max:30',
             'password' => 'required|unique:users,password|min:8|max:12|confirmed',
             'mobile' => 'required|min:11|max:11|unique:users,mobile',
