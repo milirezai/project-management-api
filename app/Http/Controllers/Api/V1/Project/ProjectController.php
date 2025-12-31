@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Project;
 
+use App\Events\Project\CreateProject;
 use App\Http\Requests\Api\V1\Project\ProjectRequest;
 use App\Http\Resources\Api\V1\Project\ProjectResource;
 use App\Models\Project\Project;
@@ -9,6 +10,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Http\Trait\DataFiltering;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Notification;
 
 class ProjectController extends  Controller
 {
@@ -156,12 +158,20 @@ class ProjectController extends  Controller
     public function store(ProjectRequest $request)
     {
         $inputs = $request->all();
-        $inputs['creator_id'] = $request->user()->id;
-        $inputs['company_id'] = $request->user()->ownedCompany->id;
+        $members = $inputs['members'];
+        $companyOwner = $request->user()->ownedCompany->owner->id;
+        $projectCreator = $request->user()->id;
+
+        $inputs['creator_id'] = $projectCreator;
+        $inputs['company_id'] = $companyOwner;
         $project = Project::create($inputs);
 
-        $project ->members()->sync($inputs['members']);
+        $project ->members()->sync($members);
 
+
+        $users = [$members,$companyOwner,$projectCreator];
+
+        event(new CreateProject($users));
 
         return ProjectResource::make($project->load('creator'));
     }

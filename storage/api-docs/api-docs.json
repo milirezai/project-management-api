@@ -2724,12 +2724,12 @@
                     }
                 ]
             },
-            "put": {
+            "post": {
                 "tags": [
                     "User"
                 ],
                 "summary": "User sync roles",
-                "operationId": "c2aec55aa38ce904e70b8613f2a78e62",
+                "operationId": "6fd30da1909161e46bf5b336e319cb56",
                 "requestBody": {
                     "description": "User sync roles",
                     "required": true,

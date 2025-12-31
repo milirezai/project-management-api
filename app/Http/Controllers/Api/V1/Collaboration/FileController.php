@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V1\Collaboration;
 use App\Http\Requests\Api\V1\Collaboration\FileRequest;
 use App\Http\Resources\Api\V1\Collaboration\FileResource;
 use App\Models\Collaboration\File;
+use App\Notifications\Collaboration\FileCreateNotification;
+use App\Notifications\Collaboration\FileUpdateNotification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -202,17 +204,20 @@ class FileController extends Controller
         }
 
         $file = $request->file('file');
+        $inputs['size'] = $file->getSize();
         $fileName = time().'.'.$file->getClientOriginalExtension();
         $save = $file->move(public_path('file'),$fileName);
         $filePath = 'file/'.$fileName;
         $inputs['path'] = $filePath;
-
         $inputs['type'] = $file->getClientOriginalExtension();
-        $inputs['size'] = $file->getSize();
         $inputs['status'] = 1;
         $inputs['user_id'] = $request->user()->id;
 
+
         $file = File::create($inputs);
+
+        $file->fileable->company->owner->notify(new FileCreateNotification());
+        $file->user->notify(new FileCreateNotification());
 
         return FileResource::make($file);
     }
@@ -314,6 +319,9 @@ class FileController extends Controller
     public function update(FileRequest $request, File $file)
     {
         $file->update($request->all());
+
+        $file->fileable->company->owner->notify(new FileUpdateNotification());
+        $file->user->notify(new FileUpdateNotification());
 
         return FileResource::make($file);
     }
