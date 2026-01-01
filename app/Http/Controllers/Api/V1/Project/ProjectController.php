@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api\V1\Project;
 
 use App\Events\Project\CreateProject;
+use App\Events\Project\UpdateProject;
 use App\Http\Requests\Api\V1\Project\ProjectRequest;
 use App\Http\Resources\Api\V1\Project\ProjectResource;
 use App\Models\Project\Project;
+use App\Models\User\User;
+use App\Notifications\Project\ProjectUpdateNotification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Http\Trait\DataFiltering;
@@ -313,7 +316,22 @@ class ProjectController extends  Controller
     {
         $project->update($request->all());
 
-        $project->members()->sync($request->members);
+        $request->whenFilled('members',function () use ($project){
+            $project->members()->sync($request->members);
+        });
+
+        $users = [];
+        $users[] = $project->company->owner->id;
+        $users[] = $project->creator->id;
+        foreach ($project->members as $member){
+            $users[] = $member->id;
+        }
+        $users = array_unique(array_values($users));
+        $users = User::findMany($users);
+       Notification::send(
+           $users,
+           new ProjectUpdateNotification()
+       );
 
         return ProjectResource::make($project->load('creator'));
     }

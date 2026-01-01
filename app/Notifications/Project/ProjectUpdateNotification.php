@@ -7,22 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProjectCreateNotification extends Notification implements ShouldQueue
+class ProjectUpdateNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     public function __construct()
     {
 //        $this->onQueue('project');
-//        $this->delay(now()->addSecond(20));
         $this->delay = now()->addSecond(20);
-//        $this->onConnection('database');
     }
-
 
     public function via(object $notifiable): array
     {
-        return ['database','email'];
+        return ['database'];
     }
 
     public function toMail(object $notifiable): MailMessage
@@ -36,8 +33,8 @@ class ProjectCreateNotification extends Notification implements ShouldQueue
     public function toDatabase(object $notifiable): array
     {
         return [
-            'title' => 'create project',
-            'message' => "project create user $notifiable->id",
+            'title' => 'update project',
+            'message' => "update create user $notifiable->id",
             'user_id' => $notifiable->id
         ];
     }
