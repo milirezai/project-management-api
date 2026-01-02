@@ -13,7 +13,6 @@ class FileUpdateNotification extends Notification implements ShouldQueue
 
     public function __construct()
     {
-//        $this->onQueue('file');
         $this->delay = now()->addSecond(20);
     }
 
@@ -34,7 +33,7 @@ class FileUpdateNotification extends Notification implements ShouldQueue
     {
         return [
             'title' => 'file update',
-            'message' => "file update for $notifiable->id"
+            'message' => 'Your file has been successfully updated. Please visit the files section to view the changes.'
         ];
     }
 }

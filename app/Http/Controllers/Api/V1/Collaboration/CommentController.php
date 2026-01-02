@@ -190,8 +190,11 @@ class CommentController extends Controller
 
         $comment = Comment::create($inputs);
 
-        $comment->commentable->company->owner->notify(new CommentCreateNotification());
-        $comment->author->notify(new CommentCreateNotification());
+        $comment->commentable->company->owner->
+        notify(new CommentCreateNotification());
+
+        $comment->author->
+        notify(new CommentCreateNotification());
 
         return CommentResource::make($comment);
     }
@@ -290,8 +293,11 @@ class CommentController extends Controller
     {
         $comment->update($request->all());
 
-        $comment->commentable->company->owner->notify(new CommentUpdateNotification());
-        $comment->author->notify(new CommentUpdateNotification());
+        $comment->commentable->company->owner
+            ->notify(new CommentUpdateNotification());
+
+        $comment->author
+            ->notify(new CommentUpdateNotification());
 
         return CommentResource::make($comment);
     }

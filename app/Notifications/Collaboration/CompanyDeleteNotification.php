@@ -13,7 +13,6 @@ class CompanyDeleteNotification extends Notification implements ShouldQueue
 
     public function __construct()
     {
-//        $this->onQueue('company');
         $this->delay = now()->addSecond(20);
     }
 
@@ -34,7 +33,7 @@ class CompanyDeleteNotification extends Notification implements ShouldQueue
     {
         return [
             'title' => 'company delete',
-            'message' => "delete company for  $notifiable->id",
+            'message' => 'Your company has been successfully deleted. If this was a mistake, please contact our support team.'
         ];
     }
 }

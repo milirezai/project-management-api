@@ -7,14 +7,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProjectCreateNotification extends Notification implements ShouldQueue
+class TaskCreateNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     public function __construct()
     {
-        $this->delay = now()->addSecond(20);
-    }
+          $this->delay = now()->addSecond(20);
+     }
 
     public function via(object $notifiable): array
     {
@@ -32,8 +32,8 @@ class ProjectCreateNotification extends Notification implements ShouldQueue
     public function toDatabase(object $notifiable): array
     {
         return [
-            'title' => 'create project',
-            'message' => 'new project has been successfully created. Please visit the projects section to manage and view details.'
+            'title' => 'create task',
+            'message' => 'new task has been successfully created. Please visit the tasks section to view details.'
         ];
     }
 }

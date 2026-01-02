@@ -13,7 +13,6 @@ class UserUpdateNotification extends Notification implements ShouldQueue
 
     public function __construct()
     {
-//        $this->onQueue('updateUser');
         $this->delay = now()->addSecond(20);
     }
 
@@ -33,9 +32,8 @@ class UserUpdateNotification extends Notification implements ShouldQueue
     public function toDatabase(object $notifiable): array
     {
         return [
-            'title' => 'user update info',
-            'message' => "update info user $notifiable->id",
-            'user_id' => $notifiable->id
+            'title' => 'update info',
+            'message' => 'Your information has been successfully updated',
         ];
     }
 }

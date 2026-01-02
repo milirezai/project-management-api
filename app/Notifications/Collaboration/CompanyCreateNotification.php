@@ -13,13 +13,11 @@ class CompanyCreateNotification extends Notification implements ShouldQueue
 
     public function __construct()
     {
-//        $this->onQueue('company');
         $this->delay = now()->addSecond(20);
     }
 
     public function via(object $notifiable): array
     {
-//        return ['mail','database'];
         return ['database'];
     }
 
@@ -35,7 +33,7 @@ class CompanyCreateNotification extends Notification implements ShouldQueue
     {
         return [
             'title' => 'company create',
-            'message' => "create company for  $notifiable->id",
+            'message' => 'Your new company has been successfully created. You can now manage and configure your companys settings.'
         ];
     }
 }

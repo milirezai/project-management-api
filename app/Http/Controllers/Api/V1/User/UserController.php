@@ -213,6 +213,7 @@ class UserController extends Controller
         }
         $user->update($request->all());
         $user->notify(new UserUpdateNotification());
+
         return UserResource::make($user);
     }
 

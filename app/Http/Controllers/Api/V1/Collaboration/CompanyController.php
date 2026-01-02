@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1\Collaboration;
 
-use App\Events\Collaboration\CompanyCreate;
 use App\Http\Requests\Api\V1\Collaboration\CompanyRequest;
 use App\Http\Resources\Api\V1\Collaboration\CompanyResource;
 use App\Http\Trait\DataFiltering;
 use App\Models\Collaboration\Company;
+use App\Notifications\Collaboration\CompanyCreateNotification;
 use App\Notifications\Collaboration\CompanyDeleteNotification;
 use App\Notifications\Collaboration\CompanyUpdateNotification;
+use App\Notifications\User\UserSyncRoleNotification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -183,7 +184,12 @@ class CompanyController extends Controller
         $request->user()->roles()->syncWithoutDetaching(2);
         $inputs['status'] = 1;
         $company = Company::create($inputs)->load('owner');
-        event(new CompanyCreate($request->user()));
+
+        $company->owner
+            ->notify(new CompanyCreateNotification());
+        $company->owner
+            ->notify(new UserSyncRoleNotification());
+
         return CompanyResource::make($company);
     }
 
@@ -335,7 +341,9 @@ class CompanyController extends Controller
     public function update(CompanyRequest $request, Company $company)
     {
         $company->update($request->all());
-        $company->owner->notify(new CompanyUpdateNotification());
+        $company->owner
+            ->notify(new CompanyUpdateNotification());
+
         return CompanyResource::make($company->load('owner'));
     }
 
@@ -362,7 +370,8 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        $company->owner->notify(new CompanyDeleteNotification());
+        $company->owner
+            ->notify(new CompanyDeleteNotification());
         $company->delete();
 
         return response()->noContent();

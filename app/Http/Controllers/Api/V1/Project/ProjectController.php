@@ -166,7 +166,7 @@ class ProjectController extends  Controller
         $projectCreator = $request->user()->id;
 
         $inputs['creator_id'] = $projectCreator;
-        $inputs['company_id'] = $companyOwner;
+        $inputs['company_id'] = $request->user()->ownedCompany->id;
         $project = Project::create($inputs);
 
         $project ->members()->sync($members);
@@ -316,7 +316,7 @@ class ProjectController extends  Controller
     {
         $project->update($request->all());
 
-        $request->whenFilled('members',function () use ($project){
+        $request->whenFilled('members',function () use ($project,$request){
             $project->members()->sync($request->members);
         });
 

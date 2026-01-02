@@ -117,7 +117,8 @@ class AuthController extends Controller
         $inputs['status'] = 1;
         $user = User::create($inputs);
         $token = $user->createToken('api-token');
-        event(new UserRegistered($user));
+        event(new UserRegistered($user->id));
+
         return $user->toResource(UserResource::class)->additional(['token' => $token->plainTextToken]);
     }
 
@@ -199,6 +200,7 @@ class AuthController extends Controller
         $user->tokens()->delete();
         $token = $user->createToken('api-token');
         $user->notify(new LoginNotification());
+
         return $user->toResource(UserResource::class)->additional(['token' => $token->plainTextToken]);
     }
 

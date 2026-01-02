@@ -13,7 +13,6 @@ class UserSyncRoleNotification extends Notification implements ShouldQueue
 
     public function __construct()
     {
-//        $this->onQueue('syncRole')
         $this->delay = now()->addSecond(20);
     }
 
@@ -33,9 +32,8 @@ class UserSyncRoleNotification extends Notification implements ShouldQueue
     public function toDatabase(object $notifiable): array
     {
         return [
-            'title' => 'sync role',
-            'message' => "role sync user $notifiable->id",
-            'user_id' => $notifiable->id
+            'title' => 'roles sync',
+            'message' => 'Your user role has been updated',
         ];
     }
 }

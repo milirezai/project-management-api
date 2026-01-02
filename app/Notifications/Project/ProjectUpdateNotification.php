@@ -13,7 +13,6 @@ class ProjectUpdateNotification extends Notification implements ShouldQueue
 
     public function __construct()
     {
-//        $this->onQueue('project');
         $this->delay = now()->addSecond(20);
     }
 
@@ -34,8 +33,7 @@ class ProjectUpdateNotification extends Notification implements ShouldQueue
     {
         return [
             'title' => 'update project',
-            'message' => "update create user $notifiable->id",
-            'user_id' => $notifiable->id
+            'message' => 'project has been successfully updated. Please visit the projects section to view the changes.'
         ];
     }
 }

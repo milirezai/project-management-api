@@ -6,6 +6,9 @@ use App\Http\Requests\Api\V1\Project\TaskRequest;
 use App\Http\Resources\Api\V1\Project\TaskResource;
 use App\Http\Trait\DataFiltering;
 use App\Models\Project\Task;
+use App\Notifications\Project\TaskCreateNotification;
+use App\Notifications\Project\TaskDeleteNotification;
+use App\Notifications\Project\TaskUpdateNotification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -173,6 +176,8 @@ class TaskController extends Controller
         $inputs = $request->all();
         $inputs['creator_id'] = $request->user()->id;
         $task = Task::create($inputs)->load('creator');
+        $task->assignee
+            ->notify(new TaskCreateNotification());
 
         return TaskResource::make($task);
     }
@@ -335,6 +340,9 @@ class TaskController extends Controller
     {
         $task->update($request->all());
 
+        $task->assignee
+            ->notify(new TaskUpdateNotification());
+
         return TaskResource::make($task->load('creator'));
     }
 
@@ -361,9 +369,11 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        $task->assignee
+            ->notify(new TaskDeleteNotification());
+
         $task->delete();
 
         return response()->noContent();
     }
 }
-// 1|edYMGUOvgg1A7n6DMuE22qXqhkrbv0MHqp1Kg37Xe3b50e49

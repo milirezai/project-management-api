@@ -13,7 +13,6 @@ class FileCreateNotification extends Notification implements ShouldQueue
 
     public function __construct()
     {
-//        $this->onQueue('file');
         $this->delay = now()->addSecond(20);
     }
 
@@ -34,7 +33,7 @@ class FileCreateNotification extends Notification implements ShouldQueue
     {
         return [
             'title' => 'file create',
-            'message' => "file created for $notifiable->id"
+            'message' => 'Your new file has been successfully uploaded and created. Please visit the files section to view or manage it.'
         ];
     }
 }

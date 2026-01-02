@@ -11,12 +11,8 @@ class CompanyUpdateNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
     public function __construct( )
     {
-//        $this->onQueue('company');
         $this->delay = now()->addSecond(20);
     }
 
@@ -37,7 +33,7 @@ class CompanyUpdateNotification extends Notification implements ShouldQueue
     {
         return [
             'title' => 'company update',
-            'message' => "update company for  $notifiable->id",
+            'message' => 'Your company has been successfully updated. Please visit your companys settings to view the changes.'
         ];
     }
 }

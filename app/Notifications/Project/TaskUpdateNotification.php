@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProjectCreateNotification extends Notification implements ShouldQueue
+class TaskUpdateNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -32,8 +32,8 @@ class ProjectCreateNotification extends Notification implements ShouldQueue
     public function toDatabase(object $notifiable): array
     {
         return [
-            'title' => 'create project',
-            'message' => 'new project has been successfully created. Please visit the projects section to manage and view details.'
+            'title' => 'update task',
+            'message' => 'task has been successfully updated. Please visit the tasks section to view the changes.'
         ];
     }
 }

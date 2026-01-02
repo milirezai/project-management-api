@@ -13,12 +13,7 @@ class WelcomeNotification extends Notification implements ShouldQueue
 
     public function __construct()
     {
-        $this->delay = now()->addMinute(1);
-    }
-
-    public function viaQueue()
-    {
-        return ['database' => 'default'];
+        $this->delay = now()->addSecond(20);
     }
 
     public function via(object $notifiable): array
@@ -37,9 +32,8 @@ class WelcomeNotification extends Notification implements ShouldQueue
     public function toDatabase(object $notifiable): array
     {
         return [
-            'title' => 'یوزر ثبت نام کرد',
-            'message' => "user $notifiable->id  registered",
-            'user_id' => $notifiable->id
+            'title' => 'register',
+            'message' => 'Welcome to project management web app',
         ];
     }
 

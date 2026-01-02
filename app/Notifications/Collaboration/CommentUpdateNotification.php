@@ -13,7 +13,6 @@ class CommentUpdateNotification extends Notification implements ShouldQueue
 
     public function __construct()
     {
-//        $this->onQueue('comment');
         $this->delay = now()->addSecond(20);
     }
 
@@ -34,7 +33,7 @@ class CommentUpdateNotification extends Notification implements ShouldQueue
     {
         return [
             'title' => 'comment update',
-            'message' => "comment created for $notifiable->id"
+            'message' => 'comment has been successfully updated.'
         ];
     }
 }

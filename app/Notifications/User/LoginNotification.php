@@ -13,13 +13,8 @@ class LoginNotification extends Notification implements ShouldQueue
 
     public function __construct()
     {
-//        $this->onQueue('login');
       $this->delay = now()->addSecond(20);
     }
-//    public function viaQueue()
-//    {
-//        return ['database' => 'login'];
-//    }
 
     public function via(object $notifiable): array
     {
@@ -38,8 +33,7 @@ class LoginNotification extends Notification implements ShouldQueue
     {
         return [
             'title' => 'login',
-            'message' => "user $notifiable->id login in site",
-            'user_id' => $notifiable->id
+            'message' => 'Welcome to project management web app',
         ];
     }
 }

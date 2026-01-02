@@ -216,8 +216,11 @@ class FileController extends Controller
 
         $file = File::create($inputs);
 
-        $file->fileable->company->owner->notify(new FileCreateNotification());
-        $file->user->notify(new FileCreateNotification());
+        $file->fileable->company->owner
+            ->notify(new FileCreateNotification());
+
+        $file->user
+            ->notify(new FileCreateNotification());
 
         return FileResource::make($file);
     }
@@ -320,8 +323,11 @@ class FileController extends Controller
     {
         $file->update($request->all());
 
-        $file->fileable->company->owner->notify(new FileUpdateNotification());
-        $file->user->notify(new FileUpdateNotification());
+        $file->fileable->company->owner
+            ->notify(new FileUpdateNotification());
+
+        $file->user
+            ->notify(new FileUpdateNotification());
 
         return FileResource::make($file);
     }
