@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Api\V1\Project;
 
 use App\Http\Requests\Api\V1\Project\TaskRequest;
 use App\Http\Resources\Api\V1\Project\TaskResource;
-use App\Http\Trait\DataFiltering;
 use App\Models\Project\Task;
 use App\Notifications\Project\TaskCreateNotification;
 use App\Notifications\Project\TaskDeleteNotification;
 use App\Notifications\Project\TaskUpdateNotification;
+use App\Trait\DataFiltering;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;

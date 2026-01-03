@@ -4,15 +4,14 @@ namespace App\Http\Controllers\Api\V1\Collaboration;
 
 use App\Http\Requests\Api\V1\Collaboration\CompanyRequest;
 use App\Http\Resources\Api\V1\Collaboration\CompanyResource;
-use App\Http\Trait\DataFiltering;
 use App\Models\Collaboration\Company;
 use App\Notifications\Collaboration\CompanyCreateNotification;
 use App\Notifications\Collaboration\CompanyDeleteNotification;
 use App\Notifications\Collaboration\CompanyUpdateNotification;
 use App\Notifications\User\UserSyncRoleNotification;
+use App\Trait\DataFiltering;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Routing\Controller;
 
 class CompanyController extends Controller

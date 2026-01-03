@@ -9,9 +9,9 @@ use App\Http\Resources\Api\V1\Project\ProjectResource;
 use App\Models\Project\Project;
 use App\Models\User\User;
 use App\Notifications\Project\ProjectUpdateNotification;
+use App\Trait\DataFiltering;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
-use App\Http\Trait\DataFiltering;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Notification;
 
