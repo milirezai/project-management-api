@@ -13,20 +13,24 @@ class WelcomeNotification extends Notification implements ShouldQueue
 
     public function __construct()
     {
-        $this->delay = now()->addSecond(20);
+        $this->delay = 20;
     }
 
+    public int $timeout = 120;
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database','mail'];
     }
 
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->subject('register')
+            ->greeting("hi $notifiable->fist_name ")
+            ->line('Welcome to project management web app')
+            ->line('Thank you for using our application!')
+            ->action('github', url('https://github.com/milirezai/project-management-api'))
+            ->salutation('milirezai');
     }
 
     public function toDatabase(object $notifiable): array

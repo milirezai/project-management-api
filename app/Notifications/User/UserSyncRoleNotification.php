@@ -13,7 +13,7 @@ class UserSyncRoleNotification extends Notification implements ShouldQueue
 
     public function __construct()
     {
-        $this->delay = now()->addSecond(20);
+        $this->delay = 20;
     }
 
     public function via(object $notifiable): array
