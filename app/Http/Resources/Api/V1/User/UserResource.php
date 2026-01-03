@@ -29,7 +29,8 @@ class UserResource extends JsonResource
             'projects' => ProjectResource::collection($this->whenLoaded('projects')),
             'assignedProjects' => ProjectResource::collection($this->whenLoaded('assignedProjects')),
             'tasks' => TaskResource::collection($this->whenLoaded('tasks')),
-            'assignedTasks' => TaskResource::collection($this->whenLoaded('assignedTasks'))
+            'assignedTasks' => TaskResource::collection($this->whenLoaded('assignedTasks')),
+            'notify' => NotificationResource::collection( $this->whenLoaded('unreadNotifications'))
         ];
     }
 }

@@ -35,7 +35,7 @@ class UserController extends Controller
      *          required=false,
      *              @OA\Schema(
      *              type="string",
-     *              example="company,ownedCompany,projects,assignedProjects,tasks,assignedTasks"
+     *              example="company,ownedCompany,projects,assignedProjects,tasks,assignedTasks,notifications"
      *          )
      *     ),
      *     @OA\Response(
@@ -67,8 +67,8 @@ class UserController extends Controller
 
         $this->loadingRelationFromRequest(
             model: $users, request: $request,
-            includes: ['company','ownedCompany','projects','assignedProjects','tasks','assignedTasks'],
-            relations: ['company','ownedCompany','projects','assignedProjects','tasks','assignedTasks']
+            includes: ['company','ownedCompany','projects','assignedProjects','tasks','assignedTasks','notifications'],
+            relations: ['company','ownedCompany','projects','assignedProjects','tasks','assignedTasks','unreadNotifications']
         );
 
         return UserResource::collection($users->get());
@@ -96,7 +96,7 @@ class UserController extends Controller
      *          required=false,
      *              @OA\Schema(
      *              type="string",
-     *              example="company,ownedCompany,projects,assignedProjects,tasks,assignedTasks"
+     *              example="company,ownedCompany,projects,assignedProjects,tasks,assignedTasks,notifications"
      *          )
      *     ),
      *     @OA\Response(
@@ -126,8 +126,8 @@ class UserController extends Controller
     {
         $this->loadingRelationFromRequest(
             model: $user, request: $request,
-            includes: ['company','ownedCompany','projects','assignedProjects','tasks','assignedTasks'],
-            relations: ['company','ownedCompany','projects','assignedProjects','tasks','assignedTasks'],
+            includes: ['company','ownedCompany','projects','assignedProjects','tasks','assignedTasks','notifications'],
+            relations: ['company','ownedCompany','projects','assignedProjects','tasks','assignedTasks','unreadNotifications'],
             relationLoadingMode: 'load'
         );
 
