@@ -7,6 +7,7 @@ use App\Http\Resources\Api\V1\User\UserResource;
 use App\Models\User\User;
 use App\Notifications\User\UserSyncRoleNotification;
 use App\Notifications\User\UserUpdateNotification;
+use App\Services\Cache\CacheHub;
 use App\Trait\DataFiltering;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(User::class);
+//        $this->authorizeResource(User::class);
     }
 
     /**
@@ -61,7 +62,7 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function index(Request $request)
+    public function index(Request $request, CacheHub $cache)
     {
          $users = User::query();
 

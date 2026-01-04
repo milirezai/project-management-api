@@ -2431,7 +2431,7 @@
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "example": "company,ownedCompany,projects,assignedProjects,tasks,assignedTasks"
+                            "example": "company,ownedCompany,projects,assignedProjects,tasks,assignedTasks,notifications"
                         }
                     }
                 ],
@@ -2498,7 +2498,7 @@
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "example": "company,ownedCompany,projects,assignedProjects,tasks,assignedTasks"
+                            "example": "company,ownedCompany,projects,assignedProjects,tasks,assignedTasks,notifications"
                         }
                     }
                 ],

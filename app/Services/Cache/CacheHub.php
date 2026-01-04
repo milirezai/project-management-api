@@ -12,13 +12,13 @@ class CacheHub
 
     public function ttl(int $ttl): static
     {
-        $this->ttl = $ttl;
+        $this->ttl =  $ttl;
         return $this;
     }
 
-    public function getTtl(): int
+    protected function getTtl(): int
     {
-        return $this->ttl;
+        return (int) $this->ttl;
     }
 
     public function prefix(string $prefix): static
@@ -27,23 +27,23 @@ class CacheHub
         return $this;
     }
 
-    public function getPrefix(): string
+    protected function getPrefix(): ?string
     {
         return $this->prefix;
     }
 
     protected function setDefaultSettings(): void
     {
-        if (is_null($this->getTtl()))
-            $this->ttl(300);
+        if ($this->getTtl() <= 0)
+            $this->ttl = 300;
         if (is_null($this->getPrefix()))
-            $this->prefix('api');
+            $this->prefix = 'api';
     }
 
     public function remember(string $key, Closure $closure)
     {
         $this->setDefaultSettings();
         $key = $this->getPrefix().' : '.$key;
-        return Cache::remember($key,$this->getTtl(),$closure );
+        return Cache::remember($key, $this->getTtl(), $closure);
     }
 }

@@ -23,7 +23,7 @@ Route::prefix('auth')->group(function (){
 });
 
 // user
-Route::apiResource('users',UserController::class)->middleware('auth:sanctum');
+Route::apiResource('users',UserController::class);//->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->controller(UserController::class)
     ->prefix('users')->group(function (){
         Route::get('/{user}/roles','roles');
