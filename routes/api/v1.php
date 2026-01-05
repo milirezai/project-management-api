@@ -16,22 +16,22 @@ use App\Http\Controllers\Api\V1\User\PermissionController;
 Route::get('/',[V1Controller::class,'index']);
 
 // auth
-Route::prefix('auth')->group(function (){
+Route::middleware('throttle:limiter')->prefix('auth')->group(function (){
     Route::post('/',[AuthController::class,'register']);
     Route::post('login',[AuthController::class,'login']);
     Route::post('logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
 });
 
 // user
-Route::apiResource('users',UserController::class);//->middleware('auth:sanctum');
-Route::middleware('auth:sanctum')->controller(UserController::class)
+Route::apiResource('users',UserController::class)->middleware(['auth:sanctum','throttle:limiter']);
+Route::middleware(['auth:sanctum','throttle:limiter'])->controller(UserController::class)
     ->prefix('users')->group(function (){
         Route::get('/{user}/roles','roles');
         Route::post('/{user}/roles','syncRoles');
     });
 
 // role
-Route::middleware('auth:sanctum')->controller(RoleController::class)
+Route::middleware(['auth:sanctum','throttle:limiter'])->controller(RoleController::class)
     ->prefix('roles')->group(function (){
         Route::get('/','index');
         Route::get('/{role}','show');
@@ -40,23 +40,23 @@ Route::middleware('auth:sanctum')->controller(RoleController::class)
     });
 
 // permissions
-Route::middleware('auth:sanctum')->controller(PermissionController::class)
+Route::middleware(['auth:sanctum','throttle:limiter'])->controller(PermissionController::class)
     ->prefix('permissions')->group(function (){
         Route::get('/','index');
     });
 
 // company
-Route::apiResource('companies',CompanyController::class)->middleware('auth:sanctum');
+Route::apiResource('companies',CompanyController::class)->middleware(['auth:sanctum','throttle:limiter']);
 
 // project
-Route::apiResource('projects',ProjectController::class)->middleware('auth:sanctum');
+Route::apiResource('projects',ProjectController::class)->middleware(['auth:sanctum','throttle:limiter']);
 
 // task
-Route::apiResource('tasks',TaskController::class)->middleware('auth:sanctum');
+Route::apiResource('tasks',TaskController::class)->middleware(['auth:sanctum','throttle:limiter']);
 
 // file
-Route::apiResource('files',FileController::class)->middleware('auth:sanctum');
+Route::apiResource('files',FileController::class)->middleware(['auth:sanctum','throttle:limiter']);
 
 // comment
-Route::apiResource('comments',CommentController::class)->middleware('auth:sanctum');
+Route::apiResource('comments',CommentController::class)->middleware(['auth:sanctum','throttle:limiter']);
 
