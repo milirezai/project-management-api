@@ -76,8 +76,6 @@ class DevelopmentSeeder extends Seeder
             $operations->map(function ($operation)  use ($entity){
                 Permission::factory()->create([
                     'name' => $operation.'.'.$entity,
-                    'description' => $operation.' in '.$entity,
-                    'status' => 1
                 ]);
             });
         });
